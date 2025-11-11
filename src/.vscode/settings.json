@@ -1,0 +1,15 @@
+{
+    "files.associations": {
+        "stdio.h": "c",
+        "stdlib.h": "c",
+        "ponto.h": "c",
+        "circulo.h": "c",
+        "pilha.h": "c",
+        "retangulo.h": "c",
+        "string.h": "c",
+        "criasvg.h": "c",
+        "disparador.h": "c",
+        "texto.h": "c",
+        "linha.h": "c"
+    }
+}

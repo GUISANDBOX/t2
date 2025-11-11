@@ -1,0 +1,15 @@
+{
+    "files.associations": {
+        "retangulo.h": "c",
+        "stdio.h": "c",
+        "circulo.h": "c",
+        "texto.h": "c",
+        "disparador.h": "c",
+        "pilha.h": "c",
+        "string.h": "c",
+        "math.h": "c",
+        "comandosqry.h": "c",
+        "linha.h": "c",
+        "ponto.h": "c"
+    }
+}

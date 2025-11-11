@@ -1,0 +1,11 @@
+pd 5 1.00 1.00
+lc 3 20
+lc 6 2
+atch 5 3 6
+shft 5 e 1
+dsp 5 10 10
+shft 5 e 1
+dsp 5 10 10
+shft 5 e 1
+dsp 5 100 100
+calc
