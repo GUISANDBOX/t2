@@ -4,11 +4,9 @@
 #include "ponto.h"
 #include "circulo.h"
 #include "retangulo.h"
-#include "Pilha.h"
 #include "Fila.h"
 #include "linha.h"
 #include "texto.h"
-#include "disparador.h"
 #include "comandosgeo.h" 
 #include "comandosqry.h"
 
@@ -17,12 +15,12 @@
 #define MSG_LEN 1000
 
 void trataPath(char *path, int tamMax, char* arg){
- int argLen = strlen(arg);
- assert(argLen<tamMax);
- if(arg[argLen-1]=='/'){
- arg[argLen-1]='\0';
- }
- strcpy(path,arg);
+    int argLen = strlen(arg);
+    assert(argLen<tamMax);
+    if(arg[argLen-1]=='/'){
+        arg[argLen-1]='\0';
+    }
+    strcpy(path,arg);
 }
 
 void trataNomeArquivo(char *path, int tamMax, char* arg){
@@ -102,7 +100,6 @@ int main(int argc, char *argv[]) {
      } //while
 
     strcat(dir,"/");strcat(dir,arq);
-    // TODO - fazer com que o nome do arquivo svg seja o nome do arquivo geo com extensão .svg
     char arquivoSVGArena[FILE_NAME_LEN];
     strcpy(arquivoSVGArena, getNomeArquivoSemExtensao(arq));
     strcat(arquivoSVGArena, ".svg");

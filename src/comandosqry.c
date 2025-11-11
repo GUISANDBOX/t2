@@ -7,7 +7,6 @@
 #include "texto.h"
 #include "ponto.h"
 #include <math.h>
-#include "disparador.h"
 
 void escreveItemTxt(Item item, int tipo, FILE *arqtxt) {
     if (tipo == 1) { // Circulo
@@ -102,115 +101,46 @@ int getIdLinhaOuTexto(Item li, int tipo_i) {
  * O arqtxt é o arquivo txt de saída para comandos qry que precisem escrever nele.
  */
 void processaQry(FILE *fileq, Fila filasaida, FILE *filesaidaquery, Fila filaOriginal, FILE *arqtxt) {
-    Disparador listadisp[100];
-    Pilha listacarr[100];
     char comando[32];
-    int z, i, j, n, tipo;
-    int iesq, idir;
-    float x, y, x1, y1, x2, y2;
-    char a;
-    char mododisp; 
+    int comandoaux, i, j, n;
+    double x, y, dx, dy;
+    char a,s;
+    char sfx[100], cor[100]; 
 
     
     int totaldeinstrucoes = 0;
-    int totaldedisparos = 0;
-    int totaldeformasesmagadas = 0;
-    int totaldeformasclonadas = 0;  
-    double pontuacaofinal = 0.0;
-
-    // Inicializa as pilhas
-    for (j=0; j<100; j++) {
-        listacarr[j] = criapilha(0);
-    }
 
     fprintf(filesaidaquery, "<svg xmlns:svg=\"http://www.w3.org/2000/svg\" xmlns=\"http://www.w3.org/2000/svg\" version=\"1.1\">\n");
     printf("Iniciando processamento do QRY\n");
     do {
-        z = fscanf(fileq, " %31s", comando);
-        if (z != 1) break;
+        comandoaux = fscanf(fileq, " %31s", comando);
+        if (comandoaux != 1) break;
 
         printf("LIDO %s\n", comando);
 
-        if (!strcmp(comando, "pd")) {
-            fscanf(fileq, "%d %f %f", &i, &x, &y);
-            listadisp[i] = criaDisparador(i, x, y);
-            printf("Disparador %d criado!\n", iddisparador(listadisp[i]));
+        if (!strcmp(comando, "a")) {
+            fscanf(fileq, "%d %d %c", &i, &j, &s);
+            fprintf(arqtxt, "[*] a %d %d %c\n", i, j, s);
             totaldeinstrucoes++;
         }
-        else if (!strcmp(comando, "lc")) {
-            fscanf(fileq, "%d %d", &i, &n);
-            printf("Inicializando carregador!\n");
-            fprintf(arqtxt, "[*] lc %d %d\n", i, n);
-            Pilha pilha = criapilha(0);
-            Item item;
-            for (j=0; j<n; j++) {
-                item = remover(&filaOriginal, &tipo);
-                empilha(&pilha, item, tipo);
-                escreveItemTxt(item, tipo, arqtxt);
-            }
-            printf("Pilha %d carregada!\n", i);
-            listacarr[i] = pilha;
+        else if (!strcmp(comando, "d")) {
+            fscanf(fileq, "%lf %lf %s", &x, &y, sfx);
+            fprintf(arqtxt, "[*] a %lf %lf %s\n", x, y, sfx);
             totaldeinstrucoes++;
         }
-        else if (!strcmp(comando, "atch")) {
-            fscanf(fileq, "%d %d %d", &i, &iesq, &idir);
-            printf("Encaixando disparadores!\n");
-            encaixar(listadisp[i], listacarr[iesq], listacarr[idir]);
-            printf("Encaixe realizado!\n");
+        else if (!strcmp(comando, "p")) {
+            fscanf(fileq, "%lf %lf %s %s", &x, &y, cor, sfx);
+            fprintf(arqtxt, "[*] p %lf %lf %s %s\n", x, y, cor, sfx);
             totaldeinstrucoes++;
         }
-        else if (!strcmp(comando, "rjd")) {
-            fscanf(fileq, "%i %c %f %f %f %f", &i, &a, &x1, &y1, &x2, &y2);
-            printf("REALIZANDO RAJADA\n");
-            Pilha pilhadodisparador;
-            
-            pilhadodisparador = (a=='d') ? getPilhaEsq(listadisp[i]) : getPilhaDir(listadisp[i]);
-            
-            while(!pilhavazia(pilhadodisparador)) {
-                pilhadodisparador = botao(listadisp[i], a);
-                printf("Disparando um objeto: %d\n", tipoatualnodisparo(listadisp[i]));
-                // TODO verificar se é para escrever o item antes de disparar ou depois do disparo na sua posição final
-                escreveItemTxt(itemAtualNoDisparo(listadisp[i]), tipoatualnodisparo(listadisp[i]), arqtxt);
-                adicionar(&filasaida, disparar(listadisp[i], x1, y1), tipoatualnodisparo(listadisp[i]));
-                x1 += x2;
-                y1 += y2;
-                totaldedisparos++;
-            }
-            totaldeinstrucoes++;
-        }
-        else if (!strcmp(comando, "shft")) {
-            fscanf(fileq, "%i %c %i", &i, &a, &n);
-            printf("REALIZANDO SHIFT\n");
-            fprintf(arqtxt, "[*] shft %d %c %d\n", i, a, n);
-            for (j=0; j<n; j++) {
-                botao(listadisp[i], a);
-            }
-            escreveItemTxt(itemAtualNoDisparo(listadisp[i]), tipoatualnodisparo(listadisp[i]), arqtxt);
-            printf("SHIFT REALIZADO PARA %c\n", a);
-            totaldeinstrucoes++;
-        }
-        else if (!strcmp(comando, "dsp")) {
-            double nx, ny;
-            fscanf(fileq, "%i %lf %lf %c", &i, &nx, &ny, &mododisp);
-            printf("Disparando um objeto: %d\n", tipoatualnodisparo(listadisp[i]));
-            fprintf(arqtxt, "[*] dsp %d %.2lf %.2lf %c\n", i, nx, ny, mododisp);
-            escreveItemTxt(itemAtualNoDisparo(listadisp[i]), tipoatualnodisparo(listadisp[i]), arqtxt);
-            Item itemdisparado = disparar(listadisp[i], nx, ny);
-            int tipodisparado = tipoatualnodisparo(listadisp[i]);
-            adicionar(&filasaida, itemdisparado, tipodisparado);
-            fprintf(arqtxt,"Posicao apos disparo: (%.2lf, %.2lf)\n\n", getXDisparador(listadisp[i]) + nx, getYDisparador(listadisp[i]) + ny);
-            totaldeinstrucoes++;
-            totaldedisparos++;
-        }
-        else if (!strcmp(comando, "calc")) {
-            printf("REALIZANDO CALC\n");
-            filaOriginal = executaCalc(filasaida, filaOriginal, filesaidaquery, arqtxt, &totaldeformasesmagadas, &totaldeformasclonadas, &pontuacaofinal);
+        else if (!strcmp(comando, "cln")) {
+            fscanf(fileq, "%lf %lf %lf %lf %s", &x, &y, &dx, &dy, sfx);
+            fprintf(arqtxt, "[*] cln %lf %lf %lf %lf %s\n", x, y, dx, dy, sfx);
             totaldeinstrucoes++;
         }
     } while (1);
 
-    exibirfila(filaOriginal, filesaidaquery);
-    fprintf(filesaidaquery, "</svg>\n");
-    fprintf(arqtxt, "\nPontuação final: %lf\nNúmero total de instruções executadas: %d\nNúmero total de disparos: %d\nNúmero total de formas esmagadas: %d\nNúmero total de formas clonadas: %d", pontuacaofinal, totaldeinstrucoes, totaldedisparos, totaldeformasesmagadas, totaldeformasclonadas);
+    fprintf(arqtxt, "\nNúmero total de instruções executadas: %d\n", totaldeinstrucoes);
 
+    fprintf(filesaidaquery, "</svg>\n");
 }
