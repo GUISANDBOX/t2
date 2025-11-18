@@ -1,0 +1,131 @@
+<!DOCTYPE html"><HTML>
+<HEAD>
+
+<style> 
+        /* Estilos basicos para as imagens */
+        img {
+            display: block;  
+            margin-left: 5px;  
+            margin-right: auto;  
+            max-width: 100%;
+            border: 2px solid #ccc;
+            width: 100%; 
+            height: auto; 
+        }
+
+        /* Classe para esconder a imagem */
+        .hidden {
+            opacity: 0; /* Torna a imagem transparente */
+            visibility: hidden; /* Garante que a imagem nao ocupe espaco e nao seja interativa */
+            pointer-events: none; /* Desativa eventos de mouse quando invisivel */
+        }
+
+        h2 {
+            cursor: pointer; 
+            color: #0056b3;
+            transition: color 0.3s ease;
+        }
+
+        h2:hover {
+            color: #007bff;
+        }
+
+        /* Classe para esconder elementos */
+        .esconder {
+            display: none; /* Remove o elemento do fluxo do documento */
+        }
+
+      @media print {img {page-break-after: always;}} 
+    </style>
+</HEAD>
+<BODY>
+<h1>ATENCAO:</h1> esta pagina nao prove as respostas dos testes, mas ilustra as consultas a fim de facilitar o entedimento da saida esperada.Esta pagina nao prove as respostas dos testes, mas ilustra as consultas a fim de facilitar o entedimento da saida esperada.<H1 id="h-1">[1] flor-encaixotada</H1>
+<IMG id="i-1" SRC=".\flor-encaixotada.svg" NAME="flor-encaixotada" />
+<H2 id="h-2">{2}(1) .\flor-encaixotada\cai-dentro.qry</H2>
+<P id="nada" style="color: blue; font-family: serif; font-style: italic; font-size: 100%; line-height: 0.8; margin: 4;">
+Vaso protegido por retangulo, mas bomba cai dentro.
+ <BR/>
+</P>
+<P id="p-2" style="color: red; font-family: courier; font-size: 125%; line-height: 0.8;">
+a 6 6 v
+ <BR/>
+d 40.00 40.00 -
+ <BR/>
+</P>
+<IMG id="i-2" SRC=".\flor-encaixotada-cai-dentro.svg" NAME="flor-encaixotada-cai-dentro" />
+<H2 id="h-3">{3}(2) .\flor-encaixotada\cai-fora-1.qry</H2>
+<P id="nada" style="color: blue; font-family: serif; font-style: italic; font-size: 100%; line-height: 0.8; margin: 4;">
+Vaso protegido por retangulo e bomba cai fora.
+ <BR/>
+</P>
+<P id="p-3" style="color: red; font-family: courier; font-size: 125%; line-height: 0.8;">
+a 6 6 v
+ <BR/>
+d 138.00 144.00 -
+ <BR/>
+</P>
+<IMG id="i-3" SRC=".\flor-encaixotada-cai-fora-1.svg" NAME="flor-encaixotada-cai-fora-1" />
+<H2 id="h-4">{4}(3) .\flor-encaixotada\cai-fora-2.qry</H2>
+<P id="nada" style="color: blue; font-family: serif; font-style: italic; font-size: 100%; line-height: 0.8; margin: 4;">
+Vaso protegido por retangulo. Duas bombas explodem fora.
+ <BR/>
+</P>
+<P id="p-4" style="color: red; font-family: courier; font-size: 125%; line-height: 0.8;">
+a 6 6 v
+ <BR/>
+d 138.00 144.00 -
+ <BR/>
+</P>
+<IMG id="i-4" SRC=".\flor-encaixotada-cai-fora-2.svg" NAME="flor-encaixotada-cai-fora-2" />
+<H2 id="h-5">{5}(4) .\flor-encaixotada\cai-fora.qry</H2>
+<P id="nada" style="color: blue; font-family: serif; font-style: italic; font-size: 100%; line-height: 0.8; margin: 4;">
+Vaso protegido por retangulo e bomba cai fora
+ <BR/>
+</P>
+<P id="p-5" style="color: red; font-family: courier; font-size: 125%; line-height: 0.8;">
+a 6 6 v
+ <BR/>
+d 138.00 144.00 -
+ <BR/>
+</P>
+<IMG id="i-5" SRC=".\flor-encaixotada-cai-fora.svg" NAME="flor-encaixotada-cai-fora" />
+
+<script>
+// Esta funcao sera' chamada ao clicar em um titulo
+function toggleVisibilidade(tituloId) {
+    // Extrai o numero do ID (ex: "30" de "titulo-imagem-30")
+    const numeroId = tituloId.replace('h-', '');
+
+    // Constroi os IDs do paragrafo e da imagem correspondentes
+    const paragrafoId = 'p-' + numeroId;
+    const imagemId = 'i-' + numeroId;
+
+    // Seleciona os elementos
+    const paragrafo = document.getElementById(paragrafoId);
+    const imagem = document.getElementById(imagemId);
+
+    // Alterna a classe 'esconder' nos elementos, se existirem
+    if (paragrafo) {
+        paragrafo.classList.toggle('esconder');
+    }
+    if (imagem) {
+        imagem.classList.toggle('esconder');
+    }
+}
+
+// Adiciona um ouvinte de evento de clique a todos os titulos
+document.addEventListener('DOMContentLoaded', function() {
+    // Seleciona todos os H2 que comecam com "titulo-imagem-"
+    const titulos = document.querySelectorAll('h2[id^="h-"]');
+
+    titulos.forEach(function(titulo) {
+        titulo.addEventListener('click', function() {
+            // Chama a funcao passando o ID do titulo clicado
+            toggleVisibilidade(this.id);
+        });
+    });
+});
+</script> 
+
+  </BODY>
+</HTML>

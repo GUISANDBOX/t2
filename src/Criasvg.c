@@ -11,7 +11,7 @@ void criaretangulo(int i, double x, double y, double w, double h, char corb[], c
 }
 
 void crialinha(int i, double x1, double y1, double x2, double y2, char cor[], FILE *f){
-    fprintf(f,"<line x1=\"%lf\" y1=\"%lf\" x2=\"%lf\" y2=\"%lf\" fill-opacity=\"0.5\" stroke=\"%s\" />\n",x1,y1,x2,y2,cor);
+    fprintf(f,"<line id=\"%d\" x1=\"%lf\" y1=\"%lf\" x2=\"%lf\" y2=\"%lf\" fill-opacity=\"0.5\" stroke=\"%s\" />\n",i,x1,y1,x2,y2,cor);
 }
 
 void criatexto(int i, double x, double y, char corb[], char corp[], char a, char txto[], char currentFFamily[], char currentFWeight[], char currentFSize[], FILE *f){

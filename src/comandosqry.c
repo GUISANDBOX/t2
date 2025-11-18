@@ -121,6 +121,7 @@ void processaQry(FILE *fileq, Fila filasaida, FILE *filesaidaquery, Fila filaOri
         if (!strcmp(comando, "a")) {
             fscanf(fileq, "%d %d %c", &i, &j, &s);
             fprintf(arqtxt, "[*] a %d %d %c\n", i, j, s);
+            transformaAnteparo(filaOriginal, i, j, s);
             totaldeinstrucoes++;
         }
         else if (!strcmp(comando, "d")) {
@@ -139,6 +140,9 @@ void processaQry(FILE *fileq, Fila filasaida, FILE *filesaidaquery, Fila filaOri
             totaldeinstrucoes++;
         }
     } while (1);
+
+    // teste apagar depois
+    exibirfila(filaOriginal, filesaidaquery);
 
     fprintf(arqtxt, "\nNúmero total de instruções executadas: %d\n", totaldeinstrucoes);
 

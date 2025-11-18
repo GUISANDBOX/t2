@@ -11,6 +11,7 @@ struct sLinha {
     Ponto p1;
     Ponto p2;
     char cor[100];
+    int anteparo;
 };
 
 Linha criaLinha(Ponto p1, Ponto p2, char cor[100], int id) {
@@ -19,6 +20,7 @@ Linha criaLinha(Ponto p1, Ponto p2, char cor[100], int id) {
     l->p1 = p1;
     l->p2 = p2;
     l->id = id;
+    l->anteparo = 0;
     strcpy(l->cor, cor); // Cor
     return (Linha)l;
 }
@@ -138,4 +140,10 @@ int getIdLinha(Linha l) {
 void destroiLinha(Linha l) {
     if (l == NULL) return;
     free(l);
+}
+
+Linha transformaAnteparoLinha(Linha l) {
+    struct sLinha *lin = l;
+    lin->anteparo = 1;
+    return lin;
 }

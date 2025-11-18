@@ -14,18 +14,35 @@ struct elemento{
 
 typedef struct elemento sNoItem;
 
-void adicionar(Fila *f,  Item item, int tipo){
+void adicionar(Fila *f, Item item, int tipo){
     sNoItem **inicio = (sNoItem **)f;
-    sNoItem *novo=(sNoItem *)malloc(sizeof(sNoItem));
+
+    sNoItem *novo = (sNoItem *)malloc(sizeof(sNoItem));
     if(!novo){
         printf("Erro na alocação\n");
         return;
     }
-    novo->item=item;
+
+    novo->item = item;
     novo->tipo = tipo;
-    novo->prox = *inicio; // Aponta o prox para o topo atual
-    *inicio = novo;
+    novo->prox = NULL;
+
+    // Se a lista está vazia, novo é o primeiro
+    if (*inicio == NULL) {
+        *inicio = novo;
+        return;
+    }
+
+    // Percorre até o último
+    sNoItem *atual = *inicio;
+    while (atual->prox != NULL) {
+        atual = atual->prox;
+    }
+
+    // Insere no final
+    atual->prox = novo;
 }
+
 
 Item remover(Fila *f, int *tipo) {
     sNoItem **inicio = (sNoItem **)f;
@@ -122,6 +139,8 @@ int getMaiorIdFIla(Fila f) {
     return id_maior;
 }
 
+
+
 void limpaFila(Fila *f) {
     sNoItem **inicio = (sNoItem **)f;
     sNoItem *atual = *inicio;
@@ -153,3 +172,38 @@ void destruirItemFila(Item item, int tipo) {
             break;
     }
 }
+
+void transformaAnteparo(Fila f, int i, int j, char s) {
+    sNoItem *atual= (sNoItem *)f;
+    int id = 0;
+    while(atual!=NULL){
+        if (atual->tipo==1) {
+            id = getIdCirculo((Circulo)atual->item);
+            if (id>=i && id<=j) {
+                
+            }
+        }
+        else if (atual->tipo==2) {
+            id = getIdRetangulo((Retangulo)atual->item);
+            if (id>=i && id<=j) {
+                
+            }
+        }
+        else if (atual->tipo==3) {
+            id = getIdLinha((Linha)atual->item);
+            if (id>=i && id<=j) {
+                atual->item = transformaAnteparoLinha((Linha)atual->item);
+            }
+        }
+        else if (atual->tipo==4) {
+            id = getIdTexto((Texto)atual->item);
+            if (id>=i && id<=j) {
+                
+            }
+        }
+        atual=atual->prox;
+    }
+    return;
+}
+
+
