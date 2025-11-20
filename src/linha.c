@@ -65,7 +65,7 @@ void printLinha(Linha l, FILE *arq) {
     printf("P1: (%f, %f)\n", getX(lin->p1), getY(lin->p1));
     printf("P2: (%f, %f)\n", getX(lin->p2), getY(lin->p2));
     printf("Cor: %s \n", lin->cor);
-    crialinha(lin->id, getX(lin->p1), getY(lin->p1), getX(lin->p2), getY(lin->p2), lin->cor, arq);
+    crialinha(lin->id, getX(lin->p1), getY(lin->p1), getX(lin->p2), getY(lin->p2), lin->cor, lin->anteparo, arq);
 }
 
 double getAreaLinha(Linha l) {
@@ -142,8 +142,9 @@ void destroiLinha(Linha l) {
     free(l);
 }
 
-Linha transformaAnteparoLinha(Linha l) {
+Linha transformaAnteparoLinha(Linha l, int novo_id) {
     struct sLinha *lin = l;
+    lin->id = novo_id;
     lin->anteparo = 1;
     return lin;
 }

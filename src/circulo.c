@@ -4,6 +4,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include "Criasvg.h"
+#include "linha.h"
 
 struct sCirculo {
     int id;
@@ -116,4 +117,20 @@ void escreveCirculoTxt(Circulo c, FILE *arq) {
 void destroiCirculo(Circulo c) {
     if (c == NULL) return;
     free(c);
+}
+
+Linha transformaAnteparoCirculo(Circulo c, int novo_id, char modo) {
+    struct sCirculo *circ = c;
+    Ponto p1, p2;
+    if (modo=='h') {
+        p1 = criaPonto(getXCirculo(c)-circ->raio, getYCirculo(c));
+        p2 = criaPonto(getXCirculo(c)+circ->raio, getYCirculo(c));
+    }
+    else {
+        p1 = criaPonto(getXCirculo(c), getYCirculo(c)-circ->raio);
+        p2 = criaPonto(getXCirculo(c), getYCirculo(c)+circ->raio);
+    }
+    Linha anteparo = criaLinha(p1, p2, circ->corb, novo_id);
+    anteparo = transformaAnteparoLinha(anteparo, novo_id);
+    return anteparo;
 }

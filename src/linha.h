@@ -49,6 +49,6 @@ int getIdLinha(Linha l);
 void destroiLinha(Linha l);
 //libera a memória da linha
 
-Linha transformaAnteparoLinha(Linha l);
+Linha transformaAnteparoLinha(Linha l, int novo_id);
 
 #endif

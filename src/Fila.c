@@ -172,15 +172,16 @@ void destruirItemFila(Item item, int tipo) {
             break;
     }
 }
-
 void transformaAnteparo(Fila f, int i, int j, char s) {
     sNoItem *atual= (sNoItem *)f;
     int id = 0;
+    int novo_id = getMaiorIdFIla(f) + 1;
     while(atual!=NULL){
         if (atual->tipo==1) {
             id = getIdCirculo((Circulo)atual->item);
             if (id>=i && id<=j) {
-                
+                atual->item = transformaAnteparoCirculo((Linha)atual->item, novo_id++, s);
+                atual->tipo = 3; // Muda o tipo para linha
             }
         }
         else if (atual->tipo==2) {
@@ -192,7 +193,7 @@ void transformaAnteparo(Fila f, int i, int j, char s) {
         else if (atual->tipo==3) {
             id = getIdLinha((Linha)atual->item);
             if (id>=i && id<=j) {
-                atual->item = transformaAnteparoLinha((Linha)atual->item);
+                atual->item = transformaAnteparoLinha((Linha)atual->item, novo_id++);
             }
         }
         else if (atual->tipo==4) {
@@ -202,8 +203,7 @@ void transformaAnteparo(Fila f, int i, int j, char s) {
             }
         }
         atual=atual->prox;
+        
     }
     return;
 }
-
-

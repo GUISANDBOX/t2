@@ -1,6 +1,7 @@
 #ifndef CIRCULO_H
 #define CIRCULO_H
 #include "ponto.h"
+#include "linha.h"
 #include <stdio.h>
 
 //programa para circulos
@@ -50,5 +51,7 @@ void escreveCirculoTxt(Circulo c, FILE *arq);
 //escreve o círculo em um arquivo txt
 
 void destroiCirculo(Circulo c);
+
+Linha transformaAnteparoCirculo(Circulo c, int novo_id, char modo);
 
 #endif

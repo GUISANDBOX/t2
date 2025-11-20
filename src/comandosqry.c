@@ -126,7 +126,7 @@ void processaQry(FILE *fileq, Fila filasaida, FILE *filesaidaquery, Fila filaOri
         }
         else if (!strcmp(comando, "d")) {
             fscanf(fileq, "%lf %lf %s", &x, &y, sfx);
-            fprintf(arqtxt, "[*] a %lf %lf %s\n", x, y, sfx);
+            fprintf(arqtxt, "[*] d %lf %lf %s\n", x, y, sfx);
             totaldeinstrucoes++;
         }
         else if (!strcmp(comando, "p")) {
@@ -148,3 +148,5 @@ void processaQry(FILE *fileq, Fila filasaida, FILE *filesaidaquery, Fila filaOri
 
     fprintf(filesaidaquery, "</svg>\n");
 }
+
+
