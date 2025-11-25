@@ -1,6 +1,7 @@
 #ifndef RET_H
 #define RET_H
 #include<stdio.h>
+#include "linha.h"
 
 //programa para retângulos.
 
@@ -56,5 +57,11 @@ void escreveRetanguloTxt(Retangulo r, FILE *arq);
 
 void destroiRetangulo(Retangulo r);
 //libera memória do retângulo
+
+Linha transformaAnteparoRetangulo1(Retangulo r, int novo_id);
+Linha transformaAnteparoRetangulo2(Retangulo r, int novo_id);
+Linha transformaAnteparoRetangulo3(Retangulo r, int novo_id);
+Linha transformaAnteparoRetangulo4(Retangulo r, int novo_id);
+
 
 #endif

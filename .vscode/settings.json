@@ -10,6 +10,7 @@
         "math.h": "c",
         "comandosqry.h": "c",
         "linha.h": "c",
-        "ponto.h": "c"
+        "ponto.h": "c",
+        "criasvg.h": "c"
     }
 }

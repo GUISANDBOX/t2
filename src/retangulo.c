@@ -3,6 +3,8 @@
 #include <stdlib.h>
 #include <string.h>
 #include "Criasvg.h"
+#include "linha.h"
+#include "ponto.h"
 
 struct sRetangulo {
     int id;
@@ -124,4 +126,32 @@ void escreveRetanguloTxt(Retangulo r, FILE *arq) {
 void destroiRetangulo(Retangulo r) {
     if (r == NULL) return;
     free(r);
+}
+
+Linha transformaAnteparoRetangulo1(Retangulo r, int novo_id) {
+    struct sRetangulo *ret = r;
+    Ponto p1 = criaPonto(ret->x, ret->y);
+    Ponto p2 = criaPonto(ret->x + ret->w, ret->y);
+    return criaLinha(p1, p2, getCorbRetangulo(r), novo_id, 1);
+}
+
+Linha transformaAnteparoRetangulo2(Retangulo r, int novo_id) {
+    struct sRetangulo *ret = r;
+    Ponto p1 = criaPonto(ret->x + ret->w, ret->y);
+    Ponto p2 = criaPonto(ret->x + ret->w, ret->y + ret->h);
+    return criaLinha(p1, p2, getCorbRetangulo(r), novo_id, 1);
+
+}
+Linha transformaAnteparoRetangulo3(Retangulo r, int novo_id) {
+    struct sRetangulo *ret = r;
+    Ponto p1 = criaPonto(ret->x + ret->w, ret->y + ret->h);
+    Ponto p2 = criaPonto(ret->x, ret->y + ret->h);
+    return criaLinha(p1, p2, getCorbRetangulo(r), novo_id, 1);
+}
+
+Linha transformaAnteparoRetangulo4(Retangulo r, int novo_id) {
+    struct sRetangulo *ret = r;
+    Ponto p1 = criaPonto(ret->x, ret->y + ret->h);
+    Ponto p2 = criaPonto(ret->x, ret->y);
+    return criaLinha(p1, p2, getCorbRetangulo(r), novo_id, 1);
 }

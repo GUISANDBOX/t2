@@ -121,7 +121,7 @@ void processaQry(FILE *fileq, Fila filasaida, FILE *filesaidaquery, Fila filaOri
         if (!strcmp(comando, "a")) {
             fscanf(fileq, "%d %d %c", &i, &j, &s);
             fprintf(arqtxt, "[*] a %d %d %c\n", i, j, s);
-            transformaAnteparo(filaOriginal, i, j, s);
+            filaOriginal = transformaAnteparo(filaOriginal, i, j, s);
             totaldeinstrucoes++;
         }
         else if (!strcmp(comando, "d")) {

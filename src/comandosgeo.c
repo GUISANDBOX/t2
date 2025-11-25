@@ -39,7 +39,7 @@ Fila processaGeo(FILE *arqgeo, Fila fila, FILE *arqsvg) {
             fscanf(arqgeo, "%d %f %f %f %f %s", &i, &x1, &y1, &x2, &y2, cor);
             Ponto p1 = criaPonto(x1, y1);
             Ponto p2 = criaPonto(x2, y2);
-            Linha lin = criaLinha(p1, p2, cor, i);
+            Linha lin = criaLinha(p1, p2, cor, i, 0);
             adicionar(&fila, lin, 3);
         }
         else if (comando[0] == 't') {

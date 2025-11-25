@@ -130,7 +130,6 @@ Linha transformaAnteparoCirculo(Circulo c, int novo_id, char modo) {
         p1 = criaPonto(getXCirculo(c), getYCirculo(c)-circ->raio);
         p2 = criaPonto(getXCirculo(c), getYCirculo(c)+circ->raio);
     }
-    Linha anteparo = criaLinha(p1, p2, circ->corb, novo_id);
-    anteparo = transformaAnteparoLinha(anteparo, novo_id);
+    Linha anteparo = criaLinha(p1, p2, circ->corb, novo_id, 1);
     return anteparo;
 }

@@ -14,13 +14,13 @@ struct sLinha {
     int anteparo;
 };
 
-Linha criaLinha(Ponto p1, Ponto p2, char cor[100], int id) {
+Linha criaLinha(Ponto p1, Ponto p2, char cor[100], int id, int anteparo) {
     struct sLinha *l = malloc(sizeof(struct sLinha));
     if (!l) return NULL; // segurança
     l->p1 = p1;
     l->p2 = p2;
     l->id = id;
-    l->anteparo = 0;
+    l->anteparo = anteparo;
     strcpy(l->cor, cor); // Cor
     return (Linha)l;
 }
@@ -119,7 +119,7 @@ Linha cloneLinha(Linha l, int novo_id) {
     struct sLinha *lin = l;
     Ponto p1_clone = criaPonto(getX(lin->p1), getY(lin->p1));
     Ponto p2_clone = criaPonto(getX(lin->p2), getY(lin->p2));
-    Linha nova_linha = criaLinha(p1_clone, p2_clone, lin->cor, novo_id);
+    Linha nova_linha = criaLinha(p1_clone, p2_clone, lin->cor, novo_id, lin->anteparo);
     return nova_linha;
 }
 

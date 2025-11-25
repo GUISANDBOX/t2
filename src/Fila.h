@@ -28,6 +28,6 @@ void limpaFila(Fila *f);
 
 void destruirItemFila(Item item, int tipo);
 
-void transformaAnteparo(Fila f, int i, int j, char s);
+Fila transformaAnteparo(Fila f, int i, int j, char s);
 
 #endif

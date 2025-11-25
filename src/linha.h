@@ -7,7 +7,7 @@
 
 typedef void* Linha;
 
-Linha criaLinha(Ponto p1, Ponto p2, char cor[], int id);
+Linha criaLinha(Ponto p1, Ponto p2, char cor[], int id, int anteparo);
 //cria a linha com suas informações
 
 void printLinha(Linha l, FILE *arq);

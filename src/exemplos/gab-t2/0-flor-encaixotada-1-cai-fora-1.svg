@@ -1,0 +1,23 @@
+<?xml version='1.0' encoding='utf-8'?>
+<svg:svg xmlns:svg="http://www.w3.org/2000/svg" viewBox="25.0 25.0 126.0 132.0">
+   <svg:g id="fig">
+   <svg:rect id="5" width="14.000" height="29.000" x="68.000" y="75.000" fill="#FF00FF" stroke="#800080" fill-opacity="0.5" stroke-width="1.0px" />
+
+   <svg:line id="6" x1="59.000000" y1="65.000000" x2="68.000000" y2="78.000000" stroke="#008000" stroke-width="2" stroke-opacity="1.000000" />
+   <svg:line id="7" x1="74.500000" y1="59.900000" x2="75.000000" y2="77.000000" stroke="#008000" stroke-width="2" stroke-opacity="1.000000" />
+   <svg:line id="8" x1="90.500000" y1="63.300000" x2="79.700000" y2="78.300000" stroke="#008000" stroke-width="2" stroke-opacity="1.000000" />
+   <svg:circle id="9" r="5.000" cx="55.000" cy="60.000" fill="#d35fbc" stroke="#501644" fill-opacity="0.5" stroke-width="1.0px" />
+
+   <svg:circle id="10" r="5.000" cx="74.000" cy="55.000" fill="#d35fbc" stroke="#501644" fill-opacity="0.5" stroke-width="1.0px" />
+
+   <svg:circle id="11" r="5.000" cx="93.000" cy="59.000" fill="#d35fbc" stroke="#501644" fill-opacity="0.5" stroke-width="1.0px" />
+
+   <svg:rect id="12" width="88.000" height="94.000" x="30.000" y="30.000" fill="white" stroke="black" fill-opacity="0.5" stroke-width="1.0px" />
+
+</svg:g><svg:circle cx="138.000000" cy="144.000000" r="1.000000" stroke-opacity="0.5" fill="none" stroke="red" stroke-width="2" stroke-dasharray="1 1" />
+
+   <svg:circle cx="138.000000" cy="144.000000" r="2.000000" stroke-opacity="0.5" fill="none" stroke="magenta" stroke-width="2" stroke-dasharray="1 1" />
+
+   <svg:circle cx="138.000000" cy="144.000000" r="3.000000" stroke-opacity="0.5" fill="none" stroke="red" stroke-width="2" stroke-dasharray="1 1" />
+
+</svg:svg>
