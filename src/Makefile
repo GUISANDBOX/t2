@@ -1,7 +1,7 @@
 PROJ_NAME=ted
 ALUNO=Guilherme Deo Hauy
 LIBS=-lm
-OBJETOS=main.o ponto.o circulo.o retangulo.o Criasvg.o Fila.o linha.o texto.o comandosgeo.o comandosqry.o
+OBJETOS=main.o ponto.o circulo.o retangulo.o Criasvg.o Lista.o linha.o texto.o comandosgeo.o comandosqry.o
 
 # compilador
 CC=gcc

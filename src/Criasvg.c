@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <string.h>
 
 void criacirculo(int i, double x, double y, double r, char corb[], char corp[], FILE *f){
 
@@ -19,6 +20,9 @@ void crialinha(int i, double x1, double y1, double x2, double y2, char cor[], in
 }
 
 void criatexto(int i, double x, double y, char corb[], char corp[], char a, char txto[], char currentFFamily[], char currentFWeight[], char currentFSize[], FILE *f){
+    if (!strcmp(currentFFamily, "sans")) {
+        strcpy(currentFFamily, "sans-serif");
+    }
     if (a=='i') {
         fprintf(f,"<text id=\"%d\" x=\"%lf\" y=\"%lf\" stroke=\"%s\" fill=\"%s\" fill-opacity=\"0.5\" text-anchor=\"start\" font-family=\"%s\" font-weight=\"%s\" font-size=\"%s\" >%s</text>\n",i,x,y,corb,corp,currentFFamily,currentFWeight,currentFSize,txto);
     }

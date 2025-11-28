@@ -100,7 +100,7 @@ int getIdLinhaOuTexto(Item li, int tipo_i) {
 /**
  * O arqtxt é o arquivo txt de saída para comandos qry que precisem escrever nele.
  */
-void processaQry(FILE *fileq, Fila filasaida, FILE *filesaidaquery, Fila filaOriginal, FILE *arqtxt) {
+void processaQry(FILE *fileq, Lista listasaida, FILE *filesaidaquery, Lista listaOriginal, FILE *arqtxt) {
     char comando[32];
     int comandoaux, i, j, n;
     double x, y, dx, dy;
@@ -121,7 +121,7 @@ void processaQry(FILE *fileq, Fila filasaida, FILE *filesaidaquery, Fila filaOri
         if (!strcmp(comando, "a")) {
             fscanf(fileq, "%d %d %c", &i, &j, &s);
             fprintf(arqtxt, "[*] a %d %d %c\n", i, j, s);
-            filaOriginal = transformaAnteparo(filaOriginal, i, j, s);
+            listaOriginal = transformaAnteparo(listaOriginal, i, j, s);
             totaldeinstrucoes++;
         }
         else if (!strcmp(comando, "d")) {
@@ -142,7 +142,7 @@ void processaQry(FILE *fileq, Fila filasaida, FILE *filesaidaquery, Fila filaOri
     } while (1);
 
     // teste apagar depois
-    exibirfila(filaOriginal, filesaidaquery);
+    exibirlista(listaOriginal, filesaidaquery);
 
     fprintf(arqtxt, "\nNúmero total de instruções executadas: %d\n", totaldeinstrucoes);
 

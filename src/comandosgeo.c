@@ -10,7 +10,7 @@ static char currentFFamily[100] = "sans";
 static char currentFWeight[100] = "normal";
 static char currentFSize[100] = "12"; 
 
-Fila processaGeo(FILE *arqgeo, Fila fila, FILE *arqsvg) {
+Lista processaGeo(FILE *arqgeo, Lista lista, FILE *arqsvg) {
     char comando[32];
     int z, i;
     float x, y, x1, x2, y1, y2, r;
@@ -27,20 +27,20 @@ Fila processaGeo(FILE *arqgeo, Fila fila, FILE *arqsvg) {
             fscanf(arqgeo, "%d %f %f %f %s %s", &i, &x, &y, &r, corb, corp);
             Ponto p = criaPonto(x, y);
             Circulo c = criaCirculo(p, r, corb, corp, i);
-            adicionar(&fila, c, 1);
+            adicionar(&lista, c, 1);
         }
         else if (comando[0] == 'r') {
             double rx, ry, rw, rh;
             fscanf(arqgeo, "%d %lf %lf %lf %lf %s %s", &i, &rx, &ry, &rw, &rh, corb, corp);
             Retangulo r = criaRetangulo(rx, ry, rw, rh, corb, corp, i);
-            adicionar(&fila, r, 2);
+            adicionar(&lista, r, 2);
         }
         else if (comando[0] == 'l') {
             fscanf(arqgeo, "%d %f %f %f %f %s", &i, &x1, &y1, &x2, &y2, cor);
             Ponto p1 = criaPonto(x1, y1);
             Ponto p2 = criaPonto(x2, y2);
             Linha lin = criaLinha(p1, p2, cor, i, 0);
-            adicionar(&fila, lin, 3);
+            adicionar(&lista, lin, 3);
         }
         else if (comando[0] == 't') {
             if (comando[1] == 's') {
@@ -58,12 +58,12 @@ Fila processaGeo(FILE *arqgeo, Fila fila, FILE *arqsvg) {
                 fgets(txto, sizeof(txto), arqgeo);
                 Ponto pt = criaPonto(x, y);
                 Texto text = criaTexto(pt, corb, corp, txto, a, currentFFamily, currentFWeight, currentFSize, i);
-                adicionar(&fila, text, 4);
+                adicionar(&lista, text, 4);
             }
         }
     } while (1);
 
-    exibirfila(fila, arqsvg);
+    exibirlista(lista, arqsvg);
     fprintf(arqsvg, "</svg>\n");
-    return fila;
+    return lista;
 }

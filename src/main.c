@@ -4,7 +4,7 @@
 #include "ponto.h"
 #include "circulo.h"
 #include "retangulo.h"
-#include "Fila.h"
+#include "Lista.h"
 #include "linha.h"
 #include "texto.h"
 #include "comandosgeo.h" 
@@ -108,14 +108,14 @@ int main(int argc, char *argv[]) {
 
     FILE *arqgeo = fopen(dir, "r"); // exemplo.geo e retg-decres.geo
     FILE *arqnovo = fopen(dirsaida, "w+");
-    Fila fila;
-    fila = criafila(0);
+    Lista lista;
+    lista = crialista(0);
     if (!arqgeo) {
         printf("Erro ao abrir o arquivo GEO  %s\n", dir);
         return 1;
     }
     
-    fila=processaGeo(arqgeo, fila, arqnovo);
+    lista=processaGeo(arqgeo, lista, arqnovo);
 
     fclose(arqgeo);
     fclose(arqnovo);
@@ -123,7 +123,7 @@ int main(int argc, char *argv[]) {
 
     if (!temquery) {
         printf("Nenhum arquivo QRY fornecido. Encerrando.\n");
-        limpaFila(&fila);
+        limpaLista(&lista);
     }
     else {
 
@@ -156,11 +156,11 @@ int main(int argc, char *argv[]) {
         printf("Criando TXT %s \n", dirsaidabaseaux);
         FILE *filesaidaquery = fopen(dirsaidabase, "w+");
         FILE *filesaidatxt = fopen(dirsaidabaseaux, "w+");
-        Fila filasaida = criafila(0);
-        processaQry(fileq, filasaida, filesaidaquery, fila, filesaidatxt);
+        Lista listasaida = crialista(0);
+        processaQry(fileq, listasaida, filesaidaquery, lista, filesaidatxt);
 
-        limpaFila(&fila);
-        limpaFila(&filasaida);
+        limpaLista(&lista);
+        limpaLista(&listasaida);
         
         fclose(fileq);
         fclose(filesaidaquery);

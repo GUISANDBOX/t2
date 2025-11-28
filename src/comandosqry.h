@@ -2,14 +2,14 @@
 #define QRY_H
 
 #include <stdio.h>
-#include "Fila.h"
+#include "Lista.h"
 #include "retangulo.h"
 #include "circulo.h"
 #include "linha.h"
 #include "texto.h"
 #include <math.h>
 
-void processaQry(FILE *fileq, Fila filasaida, FILE *filesaidaquery, Fila filaOriginal, FILE *arqtxt);
+void processaQry(FILE *fileq, Lista listasaida, FILE *filesaidaquery, Lista listaOriginal, FILE *arqtxt);
 //processa os comandos do arquivo .qry
 
 int linhaOuTexto(int tipo);

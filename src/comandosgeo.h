@@ -2,9 +2,9 @@
 #define GEO_H
 
 #include <stdio.h>
-#include "Fila.h"
+#include "Lista.h"
 
-/* Processa os comandos do arquivo .geo e adiciona os elementos na fila */
-Fila processaGeo(FILE *arqgeo, Fila fila, FILE *arqsvg);
+/* Processa os comandos do arquivo .geo e adiciona os elementos na lista */
+Lista processaGeo(FILE *arqgeo, Lista lista, FILE *arqsvg);
 
 #endif
