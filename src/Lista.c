@@ -173,11 +173,12 @@ void destruirItemLista(Item item, int tipo) {
     }
 }
 
-Lista transformaAnteparo(Lista l, int i, int j, char s) {
+Lista transformaAnteparo(Lista l, int i, int j, char s, Ponto vertices[], int *qtdVertices) {
     sNoItem *atual  = (sNoItem *)l;
     sNoItem *anterior = NULL;
     int id = 0;
     int novo_id = getMaiorIdLista(l) + 1;
+    int num = 0;
 
     while (atual != NULL) {
 
@@ -186,6 +187,8 @@ Lista transformaAnteparo(Lista l, int i, int j, char s) {
             if (id >= i && id <= j) {
                 atual->item = transformaAnteparoCirculo((Circulo)atual->item, novo_id++, s);
                 atual->tipo = 3;
+                vertices[num++] = getP1Linha((Linha)atual->item);
+                vertices[num++] = getP2Linha((Linha)atual->item);
             }
             anterior = atual;
             atual = atual->prox;
@@ -205,17 +208,25 @@ Lista transformaAnteparo(Lista l, int i, int j, char s) {
                 sNoItem *novo4 = malloc(sizeof(sNoItem));
 
                 // Preenche cada um
-                novo1->item = transformaAnteparoRetangulo1((Retangulo)atual->item, novo_id++);
+                novo1->item = transformaAnteparoRetangulo1((Retangulo)atual->item, novo_id++, 'o');
                 novo1->tipo = 3;
+                vertices[num++] = getP1Linha((Linha)novo1->item);
+                vertices[num++] = getP2Linha((Linha)novo1->item);
 
-                novo2->item = transformaAnteparoRetangulo2((Retangulo)atual->item, novo_id++);
+                novo2->item = transformaAnteparoRetangulo2((Retangulo)atual->item, novo_id++, 'o');
                 novo2->tipo = 3;
+                vertices[num++] = getP1Linha((Linha)novo2->item);
+                vertices[num++] = getP2Linha((Linha)novo2->item);
 
-                novo3->item = transformaAnteparoRetangulo3((Retangulo)atual->item, novo_id++);
+                novo3->item = transformaAnteparoRetangulo3((Retangulo)atual->item, novo_id++, 'o');
                 novo3->tipo = 3;
+                vertices[num++] = getP1Linha((Linha)novo3->item);
+                vertices[num++] = getP2Linha((Linha)novo3->item);
 
-                novo4->item = transformaAnteparoRetangulo4((Retangulo)atual->item, novo_id++);
+                novo4->item = transformaAnteparoRetangulo4((Retangulo)atual->item, novo_id++, 'o');
                 novo4->tipo = 3;
+                vertices[num++] = getP1Linha((Linha)novo4->item);
+                vertices[num++] = getP2Linha((Linha)novo4->item);
 
                 // Liga os 4 entre si
                 novo1->prox = novo2;
@@ -250,6 +261,8 @@ Lista transformaAnteparo(Lista l, int i, int j, char s) {
             id = getIdLinha((Linha)atual->item);
             if (id >= i && id <= j) {
                 atual->item = transformaAnteparoLinha((Linha)atual->item, novo_id++);
+                vertices[num++] = getP1Linha((Linha)atual->item);
+                vertices[num++] = getP2Linha((Linha)atual->item);
             }
             anterior = atual;
             atual = atual->prox;
@@ -265,5 +278,6 @@ Lista transformaAnteparo(Lista l, int i, int j, char s) {
         }
     }
 
+    *qtdVertices = num;
     return l;
 }

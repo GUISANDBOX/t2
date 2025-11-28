@@ -131,5 +131,7 @@ Linha transformaAnteparoCirculo(Circulo c, int novo_id, char modo) {
         p2 = criaPonto(getXCirculo(c), getYCirculo(c)+circ->raio);
     }
     Linha anteparo = criaLinha(p1, p2, circ->corb, novo_id, 1);
+    defineVerticePonto(p1, 'i', 'o', 0, anteparo);
+    defineVerticePonto(p2, 'f', 'o', 0, anteparo);
     return anteparo;
 }

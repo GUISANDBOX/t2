@@ -51,4 +51,8 @@ void destroiLinha(Linha l);
 
 Linha transformaAnteparoLinha(Linha l, int novo_id);
 
+Ponto getP1Linha(Linha l);
+
+Ponto getP2Linha(Linha l);
+
 #endif

@@ -6,6 +6,7 @@
 #include "linha.h"
 #include "texto.h"
 #include "ponto.h"
+#include "poligono.h"
 #include <math.h>
 
 void escreveItemTxt(Item item, int tipo, FILE *arqtxt) {
@@ -105,8 +106,10 @@ void processaQry(FILE *fileq, Lista listasaida, FILE *filesaidaquery, Lista list
     int comandoaux, i, j, n;
     double x, y, dx, dy;
     char a,s;
-    char sfx[100], cor[100]; 
-
+    char sfx[100], cor[100];
+    Ponto vertices[10000];
+    int qtdVertices = 0;
+    Poligono poligono;
     
     int totaldeinstrucoes = 0;
 
@@ -121,7 +124,9 @@ void processaQry(FILE *fileq, Lista listasaida, FILE *filesaidaquery, Lista list
         if (!strcmp(comando, "a")) {
             fscanf(fileq, "%d %d %c", &i, &j, &s);
             fprintf(arqtxt, "[*] a %d %d %c\n", i, j, s);
-            listaOriginal = transformaAnteparo(listaOriginal, i, j, s);
+            listaOriginal = transformaAnteparo(listaOriginal, i, j, s, vertices, &qtdVertices);
+            poligono = criaPoligono(qtdVertices, vertices);
+            
             totaldeinstrucoes++;
         }
         else if (!strcmp(comando, "d")) {
@@ -143,10 +148,13 @@ void processaQry(FILE *fileq, Lista listasaida, FILE *filesaidaquery, Lista list
 
     // teste apagar depois
     exibirlista(listaOriginal, filesaidaquery);
+    printf("QTD VERTICES ANTEPARO: %d\n", qtdVertices);
+    atualizaAngulosVertice(poligono, NULL);
 
     fprintf(arqtxt, "\nNúmero total de instruções executadas: %d\n", totaldeinstrucoes);
 
     fprintf(filesaidaquery, "</svg>\n");
 }
+
 
 

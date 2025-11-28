@@ -11,6 +11,8 @@
         "comandosqry.h": "c",
         "linha.h": "c",
         "ponto.h": "c",
-        "criasvg.h": "c"
+        "criasvg.h": "c",
+        "stdlib.h": "c",
+        "poligono.h": "c"
     }
 }

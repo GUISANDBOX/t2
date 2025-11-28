@@ -1,6 +1,6 @@
 #ifndef LISTA
 #define LISTA
-
+#include "ponto.h"
 //programa para listas.
 typedef void* Item; // Define que cada item da lista é uma lista genérica
 typedef void* Lista; // Define o tipo Lista
@@ -28,6 +28,6 @@ void limpaLista(Lista *l);
 
 void destruirItemLista(Item item, int tipo);
 
-Lista transformaAnteparo(Lista l, int i, int j, char s);
+Lista transformaAnteparo(Lista l, int i, int j, char s, Ponto *vertices, int *qtdVertices);
 
 #endif

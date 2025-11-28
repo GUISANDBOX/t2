@@ -33,4 +33,5 @@ char *getCorpLinha(Item item, int tipo);
 int getIdLinhaOuTexto(Item li, int tipo_i);
 //retorna o id de um item de linha ou texto
 
+
 #endif

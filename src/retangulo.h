@@ -58,10 +58,10 @@ void escreveRetanguloTxt(Retangulo r, FILE *arq);
 void destroiRetangulo(Retangulo r);
 //libera memória do retângulo
 
-Linha transformaAnteparoRetangulo1(Retangulo r, int novo_id);
-Linha transformaAnteparoRetangulo2(Retangulo r, int novo_id);
-Linha transformaAnteparoRetangulo3(Retangulo r, int novo_id);
-Linha transformaAnteparoRetangulo4(Retangulo r, int novo_id);
+Linha transformaAnteparoRetangulo1(Retangulo r, int novo_id, char codigo);
+Linha transformaAnteparoRetangulo2(Retangulo r, int novo_id, char codigo);
+Linha transformaAnteparoRetangulo3(Retangulo r, int novo_id, char codigo);
+Linha transformaAnteparoRetangulo4(Retangulo r, int novo_id, char codigo);
 
 
 #endif

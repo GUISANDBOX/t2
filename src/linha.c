@@ -146,5 +146,17 @@ Linha transformaAnteparoLinha(Linha l, int novo_id) {
     struct sLinha *lin = l;
     lin->id = novo_id;
     lin->anteparo = 1;
+    defineVerticePonto(lin->p1, 'i', 'o', 0, lin);
+    defineVerticePonto(lin->p2, 'f', 'o', 0, lin);
     return lin;
+}
+
+Ponto getP1Linha(Linha l) {
+    struct sLinha *lin = l;
+    return lin->p1;
+}
+
+Ponto getP2Linha(Linha l) {
+    struct sLinha *lin = l;
+    return lin->p2;
 }

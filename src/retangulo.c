@@ -128,30 +128,41 @@ void destroiRetangulo(Retangulo r) {
     free(r);
 }
 
-Linha transformaAnteparoRetangulo1(Retangulo r, int novo_id) {
+Linha transformaAnteparoRetangulo1(Retangulo r, int novo_id, char codigo) {
     struct sRetangulo *ret = r;
     Ponto p1 = criaPonto(ret->x, ret->y);
     Ponto p2 = criaPonto(ret->x + ret->w, ret->y);
-    return criaLinha(p1, p2, getCorbRetangulo(r), novo_id, 1);
+    Linha anteparo = criaLinha(p1, p2, getCorbRetangulo(r), novo_id, 1);
+    defineVerticePonto(p1, 'i', codigo, 0, anteparo);
+    defineVerticePonto(p2, 'f', codigo, 0, anteparo);
+    return anteparo;
 }
 
-Linha transformaAnteparoRetangulo2(Retangulo r, int novo_id) {
+Linha transformaAnteparoRetangulo2(Retangulo r, int novo_id, char codigo) {
     struct sRetangulo *ret = r;
     Ponto p1 = criaPonto(ret->x + ret->w, ret->y);
     Ponto p2 = criaPonto(ret->x + ret->w, ret->y + ret->h);
-    return criaLinha(p1, p2, getCorbRetangulo(r), novo_id, 1);
-
+    Linha anteparo = criaLinha(p1, p2, getCorbRetangulo(r), novo_id, 1);
+    defineVerticePonto(p1, 'i', codigo, 0, anteparo);
+    defineVerticePonto(p2, 'f', codigo, 0, anteparo);
+    return anteparo;
 }
-Linha transformaAnteparoRetangulo3(Retangulo r, int novo_id) {
+Linha transformaAnteparoRetangulo3(Retangulo r, int novo_id, char codigo) {
     struct sRetangulo *ret = r;
     Ponto p1 = criaPonto(ret->x + ret->w, ret->y + ret->h);
     Ponto p2 = criaPonto(ret->x, ret->y + ret->h);
-    return criaLinha(p1, p2, getCorbRetangulo(r), novo_id, 1);
+    Linha anteparo = criaLinha(p1, p2, getCorbRetangulo(r), novo_id, 1);
+    defineVerticePonto(p1, 'i', codigo, 0, anteparo);
+    defineVerticePonto(p2, 'f', codigo, 0, anteparo);
+    return anteparo;
 }
 
-Linha transformaAnteparoRetangulo4(Retangulo r, int novo_id) {
+Linha transformaAnteparoRetangulo4(Retangulo r, int novo_id, char codigo) {
     struct sRetangulo *ret = r;
     Ponto p1 = criaPonto(ret->x, ret->y + ret->h);
     Ponto p2 = criaPonto(ret->x, ret->y);
-    return criaLinha(p1, p2, getCorbRetangulo(r), novo_id, 1);
+    Linha anteparo = criaLinha(p1, p2, getCorbRetangulo(r), novo_id, 1);
+    defineVerticePonto(p1, 'i', codigo, 0, anteparo);
+    defineVerticePonto(p2, 'f', codigo, 0, anteparo);
+    return anteparo;
 }
