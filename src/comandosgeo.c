@@ -16,6 +16,7 @@ Lista processaGeo(FILE *arqgeo, Lista lista, FILE *arqsvg) {
     float x, y, x1, x2, y1, y2, r;
     char corb[100], corp[100], cor[100], txto[100], fFamily[100], fWeight[100], fSize[100];
     char a;
+    double menorX=1000000, menorY=1000000, maiorX=-1000000, maiorY=-1000000;
 
     fprintf(arqsvg, "<svg xmlns:svg=\"http://www.w3.org/2000/svg\" xmlns=\"http://www.w3.org/2000/svg\" version=\"1.1\">\n");
 
@@ -28,12 +29,20 @@ Lista processaGeo(FILE *arqgeo, Lista lista, FILE *arqsvg) {
             Ponto p = criaPonto(x, y);
             Circulo c = criaCirculo(p, r, corb, corp, i);
             adicionar(&lista, c, 1);
+            if(x - r < menorX) menorX = x - r;
+            if(y - r < menorY) menorY = y - r;
+            if(x + r > maiorX) maiorX = x + r;
+            if(y + r > maiorY) maiorY = y + r;
         }
         else if (comando[0] == 'r') {
             double rx, ry, rw, rh;
             fscanf(arqgeo, "%d %lf %lf %lf %lf %s %s", &i, &rx, &ry, &rw, &rh, corb, corp);
             Retangulo r = criaRetangulo(rx, ry, rw, rh, corb, corp, i);
             adicionar(&lista, r, 2);
+            if(rx < menorX) menorX = rx;
+            if(ry < menorY) menorY = ry;
+            if(rx + rw > maiorX) maiorX = rx + rw;
+            if(ry + rh > maiorY) maiorY = ry + rh;
         }
         else if (comando[0] == 'l') {
             fscanf(arqgeo, "%d %f %f %f %f %s", &i, &x1, &y1, &x2, &y2, cor);
@@ -41,6 +50,14 @@ Lista processaGeo(FILE *arqgeo, Lista lista, FILE *arqsvg) {
             Ponto p2 = criaPonto(x2, y2);
             Linha lin = criaLinha(p1, p2, cor, i, 0);
             adicionar(&lista, lin, 3);
+            if(x1 < menorX) menorX = x1;
+            if(x2 < menorX) menorX = x2;
+            if(y1 < menorY) menorY = y1;
+            if(y2 < menorY) menorY = y2;
+            if(x1 > maiorX) maiorX = x1;
+            if(x2 > maiorX) maiorX = x2;
+            if(y1 > maiorY) maiorY = y1;
+            if(y2 > maiorY) maiorY = y2;
         }
         else if (comando[0] == 't') {
             if (comando[1] == 's') {
@@ -59,9 +76,16 @@ Lista processaGeo(FILE *arqgeo, Lista lista, FILE *arqsvg) {
                 Ponto pt = criaPonto(x, y);
                 Texto text = criaTexto(pt, corb, corp, txto, a, currentFFamily, currentFWeight, currentFSize, i);
                 adicionar(&lista, text, 4);
+                if(x < menorX) menorX = x;
+                if(y < menorY) menorY = y;
+                if(x > maiorX) maiorX = x;
+                if(y > maiorY) maiorY = y;
             }
         }
     } while (1);
+
+    Retangulo r1 = criaRetangulo(menorX-10, menorY-10, maiorX-menorX+20, maiorY-menorY+20, "#000000FF", "#00000000", -1);
+    adicionar(&lista, r1, 2);
 
     exibirlista(lista, arqsvg);
     fprintf(arqsvg, "</svg>\n");

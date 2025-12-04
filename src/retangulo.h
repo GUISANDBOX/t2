@@ -7,7 +7,7 @@
 
 typedef void *Retangulo;
 
-Retangulo criaRetangulo(double x, double y, double w, double h, char corb[100], char corp[100], int id);
+Retangulo criaRetangulo(double x, double y, double w, double h, char corb[], char corp[], int id);
 //cria o retângulo com suas informações
 
 void printRetangulo(Retangulo r, FILE *arq);

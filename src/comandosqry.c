@@ -125,7 +125,10 @@ void processaQry(FILE *fileq, Lista listasaida, FILE *filesaidaquery, Lista list
             fscanf(fileq, "%d %d %c", &i, &j, &s);
             fprintf(arqtxt, "[*] a %d %d %c\n", i, j, s);
             listaOriginal = transformaAnteparo(listaOriginal, i, j, s, vertices, &qtdVertices);
+            listaOriginal = transformaAnteparo(listaOriginal, -1, -1, s, vertices, &qtdVertices);
             poligono = criaPoligono(qtdVertices, vertices);
+
+            
             
             totaldeinstrucoes++;
         }
@@ -150,6 +153,11 @@ void processaQry(FILE *fileq, Lista listasaida, FILE *filesaidaquery, Lista list
     exibirlista(listaOriginal, filesaidaquery);
     printf("QTD VERTICES ANTEPARO: %d\n", qtdVertices);
     atualizaAngulosVertice(poligono, NULL);
+    printf("--- Antes de ordenar ---\n");
+    printVertices(poligono);
+    ordenarVerticesPorAngulo(poligono);
+    printf("--- Depois de ordenar ---\n");
+    printVertices(poligono);
 
     fprintf(arqtxt, "\nNúmero total de instruções executadas: %d\n", totaldeinstrucoes);
 

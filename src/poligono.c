@@ -1,4 +1,5 @@
 #include "ponto.h"
+#include "linha.h"
 #include "poligono.h"
 #include <stdio.h>
 #include <stdlib.h>
@@ -28,7 +29,7 @@ void insertVertice(Poligono poligono, Ponto vertice) {
 
 void atualizaAngulosVertice(Poligono poligono, Ponto base) {
     struct sPoligono *pol = poligono;
-    printf("Angulo de %d vertices\n", pol->n);
+    //printf("Angulo de %d vertices\n", pol->n);
     for (int i = 0; i < pol->n; i++) {
         if (base != NULL) {
             double dx = getX(pol->vertices[i]) - getX(base);
@@ -44,6 +45,34 @@ void atualizaAngulosVertice(Poligono poligono, Ponto base) {
             if (angulo<0) angulo += 360.0;
             defineAngulo(pol->vertices[i], angulo);
         }
+        //printPonto(pol->vertices[i]);
+    }
+}
+
+int comparaAngulo(const void *a, const void *b) {
+    const Ponto *p1 = (const Ponto *)a;
+    const Ponto *p2 = (const Ponto *)b;
+
+    double ang1 = getAngulo(*p1);
+    double ang2 = getAngulo(*p2);
+
+    if (ang1 < ang2) return -1;
+    if (ang1 > ang2) return 1;
+    return 0;
+}
+
+void ordenarVerticesPorAngulo(Poligono poligono) {
+    struct sPoligono *pol = poligono;
+    qsort(pol->vertices, pol->n, sizeof(Ponto), comparaAngulo);
+}
+
+void printVertices(Poligono poligono) {
+    struct sPoligono *pol = poligono;
+    printf("Angulo de %d vertices\n", pol->n);
+    for (int i = 0; i < pol->n; i++) {
         printPonto(pol->vertices[i]);
+        Linha seg = (Linha)getSegmento(pol->vertices[i]);
+        printf(" - Segmento: %i", getIdLinha(seg));
+        printf("\n");
     }
 }

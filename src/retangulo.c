@@ -16,7 +16,7 @@ struct sRetangulo {
     char corp[100];
 };
 
-Retangulo criaRetangulo(double x, double y, double w, double h, char corb[100], char corp[100], int id) {
+Retangulo criaRetangulo(double x, double y, double w, double h, char corb[], char corp[], int id) {
     struct sRetangulo *r = malloc(sizeof(struct sRetangulo));
     r->id = id;
     r->x = x;

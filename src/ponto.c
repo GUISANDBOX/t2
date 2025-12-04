@@ -39,7 +39,6 @@ void defineAngulo(Ponto p, double ang) {
 void printPonto(Ponto p) {
     struct sPonto *ponto = p;
     printf("(%.1f, %.1f) | [%lf, %c, %c] ", ponto->x, ponto->y, ponto->angulo, ponto->tipo, ponto->codigo);
-    printf("\n");
 }
 
 float getX(Ponto p) {
@@ -50,4 +49,14 @@ float getX(Ponto p) {
 float getY(Ponto p) {
     struct sPonto *ponto = p;
     return ponto->y;
+}
+
+double getAngulo(Ponto p) {
+    struct sPonto *ponto = p;
+    return ponto->angulo;
+}
+
+Segmento getSegmento(Ponto p) {
+    struct sPonto *ponto = p;
+    return ponto->pSeg;
 }

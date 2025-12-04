@@ -21,4 +21,8 @@ void defineVerticePonto(Ponto p, char tipo, char codigo, double angulo, Segmento
 
 void defineAngulo(Ponto p, double ang);
 
+double getAngulo(Ponto p);
+
+Segmento getSegmento(Ponto p);
+
 #endif
