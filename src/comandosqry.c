@@ -101,7 +101,7 @@ int getIdLinhaOuTexto(Item li, int tipo_i) {
 /**
  * O arqtxt é o arquivo txt de saída para comandos qry que precisem escrever nele.
  */
-void processaQry(FILE *fileq, Lista listasaida, FILE *filesaidaquery, Lista listaOriginal, FILE *arqtxt) {
+void processaQry(FILE *fileq, FILE *filesaidaquery, Lista listaOriginal, FILE *arqtxt) {
     char comando[32];
     int comandoaux, i, j, n;
     double x, y, dx, dy;
@@ -110,8 +110,6 @@ void processaQry(FILE *fileq, Lista listasaida, FILE *filesaidaquery, Lista list
     Ponto vertices[10000];
     int qtdVertices = 0;
     Poligono poligono;
-    
-    int totaldeinstrucoes = 0;
 
     fprintf(filesaidaquery, "<svg xmlns:svg=\"http://www.w3.org/2000/svg\" xmlns=\"http://www.w3.org/2000/svg\" version=\"1.1\">\n");
     printf("Iniciando processamento do QRY\n");
@@ -127,39 +125,45 @@ void processaQry(FILE *fileq, Lista listasaida, FILE *filesaidaquery, Lista list
             listaOriginal = transformaAnteparo(listaOriginal, i, j, s, vertices, &qtdVertices);
             listaOriginal = transformaAnteparo(listaOriginal, -1, -1, s, vertices, &qtdVertices);
             poligono = criaPoligono(qtdVertices, vertices);
-
-            
-            
-            totaldeinstrucoes++;
         }
         else if (!strcmp(comando, "d")) {
             fscanf(fileq, "%lf %lf %s", &x, &y, sfx);
             fprintf(arqtxt, "[*] d %lf %lf %s\n", x, y, sfx);
-            totaldeinstrucoes++;
+            Ponto bomba = criaPonto(x, y);
+            adicionaBomba(&listaOriginal, bomba);
+            atualizaAngulosVertice(poligono, bomba);
+            ordenarVerticesPorAngulo(poligono);
+            printVertices(poligono);
         }
         else if (!strcmp(comando, "p")) {
             fscanf(fileq, "%lf %lf %s %s", &x, &y, cor, sfx);
             fprintf(arqtxt, "[*] p %lf %lf %s %s\n", x, y, cor, sfx);
-            totaldeinstrucoes++;
+            Ponto bomba = criaPonto(x, y);
+            adicionaBomba(&listaOriginal, bomba);
+            atualizaAngulosVertice(poligono, bomba);
+            ordenarVerticesPorAngulo(poligono);
+            printVertices(poligono);
         }
         else if (!strcmp(comando, "cln")) {
             fscanf(fileq, "%lf %lf %lf %lf %s", &x, &y, &dx, &dy, sfx);
             fprintf(arqtxt, "[*] cln %lf %lf %lf %lf %s\n", x, y, dx, dy, sfx);
-            totaldeinstrucoes++;
+            Ponto bomba = criaPonto(x, y);
+            adicionaBomba(&listaOriginal, bomba);
+            atualizaAngulosVertice(poligono, bomba);
+            ordenarVerticesPorAngulo(poligono);
+            printVertices(poligono);
         }
     } while (1);
 
     // teste apagar depois
     exibirlista(listaOriginal, filesaidaquery);
-    printf("QTD VERTICES ANTEPARO: %d\n", qtdVertices);
-    atualizaAngulosVertice(poligono, NULL);
-    printf("--- Antes de ordenar ---\n");
-    printVertices(poligono);
-    ordenarVerticesPorAngulo(poligono);
-    printf("--- Depois de ordenar ---\n");
-    printVertices(poligono);
-
-    fprintf(arqtxt, "\nNúmero total de instruções executadas: %d\n", totaldeinstrucoes);
+    // printf("QTD VERTICES ANTEPARO: %d\n", qtdVertices);
+    // atualizaAngulosVertice(poligono, NULL);
+    // printf("--- Antes de ordenar ---\n");
+    // printVertices(poligono);
+    // ordenarVerticesPorAngulo(poligono);
+    // printf("--- Depois de ordenar ---\n");
+    // printVertices(poligono);
 
     fprintf(filesaidaquery, "</svg>\n");
 }

@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include "Lista.h"
 #include "circulo.h"
+#include "ponto.h"
 #include "retangulo.h"
 #include "linha.h"
 #include "texto.h"
@@ -284,4 +285,9 @@ Lista transformaAnteparo(Lista l, int i, int j, char s, Ponto vertices[], int *q
 
     *qtdVertices = num;
     return l;
+}
+
+void adicionaBomba(Lista *l, Ponto centro) {
+    Texto bomba = criaTexto(centro, "red", "red", ".", 'm', "cursive", "bolder", "20", 0);
+    adicionar(l, (Item)bomba, 4);
 }

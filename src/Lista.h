@@ -30,4 +30,6 @@ void destruirItemLista(Item item, int tipo);
 
 Lista transformaAnteparo(Lista l, int i, int j, char s, Ponto *vertices, int *qtdVertices);
 
+void adicionaBomba(Lista *l, Ponto centro);
+
 #endif

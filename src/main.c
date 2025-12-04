@@ -156,11 +156,9 @@ int main(int argc, char *argv[]) {
         printf("Criando TXT %s \n", dirsaidabaseaux);
         FILE *filesaidaquery = fopen(dirsaidabase, "w+");
         FILE *filesaidatxt = fopen(dirsaidabaseaux, "w+");
-        Lista listasaida = crialista(0);
-        processaQry(fileq, listasaida, filesaidaquery, lista, filesaidatxt);
+        processaQry(fileq, filesaidaquery, lista, filesaidatxt);
 
         limpaLista(&lista);
-        limpaLista(&listasaida);
         
         fclose(fileq);
         fclose(filesaidaquery);

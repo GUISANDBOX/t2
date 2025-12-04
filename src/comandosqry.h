@@ -9,7 +9,7 @@
 #include "texto.h"
 #include <math.h>
 
-void processaQry(FILE *fileq, Lista listasaida, FILE *filesaidaquery, Lista listaOriginal, FILE *arqtxt);
+void processaQry(FILE *fileq, FILE *filesaidaquery, Lista listaOriginal, FILE *arqtxt);
 //processa os comandos do arquivo .qry
 
 int linhaOuTexto(int tipo);
