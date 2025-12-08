@@ -1,7 +1,9 @@
 #ifndef LISTA
 #define LISTA
 #include "ponto.h"
+
 //programa para listas.
+
 typedef void* Item; // Define que cada item da lista é uma lista genérica
 typedef void* Lista; // Define o tipo Lista
 

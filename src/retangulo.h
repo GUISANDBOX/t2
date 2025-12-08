@@ -1,6 +1,6 @@
 #ifndef RET_H
 #define RET_H
-#include<stdio.h>
+#include <stdio.h>
 #include "linha.h"
 
 //programa para retângulos.

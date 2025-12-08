@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <assert.h>
+#include <stdlib.h>
 #include "ponto.h"
 #include "circulo.h"
 #include "retangulo.h"
@@ -70,31 +71,41 @@ int main(int argc, char *argv[]) {
     int i=1;
     float x, y, x1, x2, y1, y2, r, w, h;
     char corb[100], corp[100], cor[100], txto[100], fFamily[100], fWeight[100], fSize[100];
+    int n=10;
+    char ordenacao='q';
     
     while (i < argc){
          if (strcmp(argv[i],"-e")==0){
              i++;
-             /* se i >= argc: ERRO-falta parametro */
              trataPath(dir,PATH_LEN, argv[i]);
              strcpy(bed, dir);
          }
          else if (strcmp(argv[i],"-f") == 0){
              i++;
-             /* se i >= argc: ERRO-falta parametro */
              trataNomeArquivo(arq,FILE_NAME_LEN,argv[i]);
              printf("LIDO ARQ F: %s\n", arq);
          }
          else if (strcmp(argv[i],"-o") == 0){
              i++;
-             /* se i >= argc: ERRO-falta parametro */
              trataNomeArquivo(dirsaida,PATH_LEN,argv[i]);
              strcpy(dirsaidabase, dirsaida);
          }
          else if (strcmp(argv[i],"-q") == 0){
              i++;
-             /* se i >= argc: ERRO-falta parametro */
              trataNomeArquivo(arqquery,FILE_NAME_LEN,argv[i]);
              temquery = 1;
+         }
+         else if(strcmp(argv[i],"-to") == 0){
+             i++;
+             ordenacao = argv[i][0];
+         }
+         else if(strcmp(argv[i],"-i") == 0){
+             i++;
+             n = atoi(argv[i]);
+         }
+         else{
+             printf("Comando %s inválido!\n", argv[i]);
+             return 1;
          }
          i++;
      } //while
@@ -156,7 +167,7 @@ int main(int argc, char *argv[]) {
         printf("Criando TXT %s \n", dirsaidabaseaux);
         FILE *filesaidaquery = fopen(dirsaidabase, "w+");
         FILE *filesaidatxt = fopen(dirsaidabaseaux, "w+");
-        processaQry(fileq, filesaidaquery, lista, filesaidatxt);
+        processaQry(fileq, filesaidaquery, lista, filesaidatxt, ordenacao, n);
 
         limpaLista(&lista);
         

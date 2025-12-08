@@ -4,6 +4,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
+#include "Mergesort.h"
+
+Ponto bomba;
 
 struct sPoligono {
     int n;
@@ -28,6 +31,7 @@ void insertVertice(Poligono poligono, Ponto vertice) {
 }
 
 void atualizaAngulosVertice(Poligono poligono, Ponto base) {
+    bomba=base;
     struct sPoligono *pol = poligono;
     //printf("Angulo de %d vertices\n", pol->n);
     for (int i = 0; i < pol->n; i++) {
@@ -49,7 +53,7 @@ void atualizaAngulosVertice(Poligono poligono, Ponto base) {
     }
 }
 
-int comparaAngulo(const void *a, const void *b) {
+int comparaVertice(const void *a, const void *b) {
     const Ponto *p1 = (const Ponto *)a;
     const Ponto *p2 = (const Ponto *)b;
 
@@ -58,12 +62,36 @@ int comparaAngulo(const void *a, const void *b) {
 
     if (ang1 < ang2) return -1;
     if (ang1 > ang2) return 1;
+    if (ang1 == ang2) {
+        // Se os ângulos forem iguais, ordenar pela distância ao ponto base (bomba)
+        double dx1 = getX(*p1) - getX(bomba);
+        double dy1 = getY(*p1) - getY(bomba);
+        double dist1 = sqrt(dx1 * dx1 + dy1 * dy1);
+
+        double dx2 = getX(*p2) - getX(bomba);
+        double dy2 = getY(*p2) - getY(bomba);
+        double dist2 = sqrt(dx2 * dx2 + dy2 * dy2);
+
+        if (dist1 < dist2) return 1;
+        if (dist1 > dist2) return -1;
+        if (dist1 == dist2) {
+            if (gettipoPonto(*p1) == 'i' && gettipoPonto(*p2) == 'f') return -1;
+            if (gettipoPonto(*p1) == 'f' && gettipoPonto(*p2) == 'i') return 1;
+            if (gettipoPonto(*p1) == gettipoPonto(*p2)) return 0;
+        }
+    }
     return 0;
 }
 
-void ordenarVerticesPorAngulo(Poligono poligono) {
+void ordenarVerticesPorAngulo(Poligono poligono, char ordenacao, int n) {
     struct sPoligono *pol = poligono;
-    qsort(pol->vertices, pol->n, sizeof(Ponto), comparaAngulo);
+    if(ordenacao == 'q'){
+        qsort(pol->vertices, pol->n, sizeof(Ponto), comparaVertice);
+        return;
+    }
+    else{
+        MergeSort(pol->vertices, 0, pol->n - 1, n);
+    }
 }
 
 void printVertices(Poligono poligono) {

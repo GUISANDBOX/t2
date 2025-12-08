@@ -25,4 +25,7 @@ double getAngulo(Ponto p);
 
 Segmento getSegmento(Ponto p);
 
+char gettipoPonto(Ponto p);
+//retorna o tipo do ponto
+
 #endif

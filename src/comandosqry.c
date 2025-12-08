@@ -101,7 +101,7 @@ int getIdLinhaOuTexto(Item li, int tipo_i) {
 /**
  * O arqtxt é o arquivo txt de saída para comandos qry que precisem escrever nele.
  */
-void processaQry(FILE *fileq, FILE *filesaidaquery, Lista listaOriginal, FILE *arqtxt) {
+void processaQry(FILE *fileq, FILE *filesaidaquery, Lista listaOriginal, FILE *arqtxt, char ordenacao, int N) {
     char comando[32];
     int comandoaux, i, j, n;
     double x, y, dx, dy;
@@ -132,7 +132,7 @@ void processaQry(FILE *fileq, FILE *filesaidaquery, Lista listaOriginal, FILE *a
             Ponto bomba = criaPonto(x, y);
             adicionaBomba(&listaOriginal, bomba);
             atualizaAngulosVertice(poligono, bomba);
-            ordenarVerticesPorAngulo(poligono);
+            ordenarVerticesPorAngulo(poligono, ordenacao, N);
             printVertices(poligono);
         }
         else if (!strcmp(comando, "p")) {
@@ -141,7 +141,7 @@ void processaQry(FILE *fileq, FILE *filesaidaquery, Lista listaOriginal, FILE *a
             Ponto bomba = criaPonto(x, y);
             adicionaBomba(&listaOriginal, bomba);
             atualizaAngulosVertice(poligono, bomba);
-            ordenarVerticesPorAngulo(poligono);
+            ordenarVerticesPorAngulo(poligono, ordenacao, N);
             printVertices(poligono);
         }
         else if (!strcmp(comando, "cln")) {
@@ -150,7 +150,7 @@ void processaQry(FILE *fileq, FILE *filesaidaquery, Lista listaOriginal, FILE *a
             Ponto bomba = criaPonto(x, y);
             adicionaBomba(&listaOriginal, bomba);
             atualizaAngulosVertice(poligono, bomba);
-            ordenarVerticesPorAngulo(poligono);
+            ordenarVerticesPorAngulo(poligono, ordenacao, N);
             printVertices(poligono);
         }
     } while (1);

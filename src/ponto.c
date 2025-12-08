@@ -60,3 +60,8 @@ Segmento getSegmento(Ponto p) {
     struct sPonto *ponto = p;
     return ponto->pSeg;
 }
+
+char gettipoPonto(Ponto p) {
+    struct sPonto *ponto = p;
+    return ponto->tipo;
+}
