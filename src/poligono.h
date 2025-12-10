@@ -1,6 +1,7 @@
 #ifndef POLIGONO_H
 #define POLIGONO_H
 #include "ponto.h"
+#include "Arvore.h"
 
 typedef void* Poligono;
 
@@ -16,9 +17,11 @@ void ordenarVerticesPorAngulo(Poligono poligono, char ordenacao, int n);
 
 void printVertices(Poligono poligono);
 
-// Helpers geométricos
-int pontoEstaDentroPoligono(Poligono poligono, Ponto p);
-int segmentoIntersecionaPoligono(Linha s, Poligono poligono);
-
+Arvore insertVerticesarvore(Arvore a, Poligono poligono);
+Linha raio(Ponto bomba, Ponto v);
+int orientacao(Ponto a, Ponto b, Ponto c);
+int pontoNoSegmento(Ponto a, Ponto b, Ponto p);
+int segmentosInterceptam(Ponto a, Ponto b, Ponto c, Ponto d);
+Linha* getV(Poligono p);
+int getVCount(Poligono p);
 #endif
-

@@ -84,10 +84,11 @@ Lista processaGeo(FILE *arqgeo, Lista lista, FILE *arqsvg) {
         }
     } while (1);
 
+    exibirlista(lista, arqsvg);
+    fprintf(arqsvg, "</svg>\n");
+    
     Retangulo r1 = criaRetangulo(menorX-10, menorY-10, maiorX-menorX+20, maiorY-menorY+20, "#000000FF", "#00000000", -1);
     adicionar(&lista, r1, 2);
 
-    exibirlista(lista, arqsvg);
-    fprintf(arqsvg, "</svg>\n");
     return lista;
 }

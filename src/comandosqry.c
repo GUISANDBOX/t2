@@ -8,6 +8,7 @@
 #include "ponto.h"
 #include "poligono.h"
 #include <math.h>
+#include "Arvore.h"
 
 void escreveItemTxt(Item item, int tipo, FILE *arqtxt) {
     if (tipo == 1) { // Circulo
@@ -110,6 +111,7 @@ void processaQry(FILE *fileq, FILE *filesaidaquery, Lista listaOriginal, FILE *a
     Ponto vertices[10000];
     int qtdVertices = 0;
     Poligono poligono;
+    Arvore arvore=criaarvore();
 
     fprintf(filesaidaquery, "<svg xmlns:svg=\"http://www.w3.org/2000/svg\" xmlns=\"http://www.w3.org/2000/svg\" version=\"1.1\">\n");
     printf("Iniciando processamento do QRY\n");
@@ -134,6 +136,8 @@ void processaQry(FILE *fileq, FILE *filesaidaquery, Lista listaOriginal, FILE *a
             atualizaAngulosVertice(poligono, bomba);
             ordenarVerticesPorAngulo(poligono, ordenacao, N);
             printVertices(poligono);
+            arvore=insertVerticesarvore(arvore,poligono);
+            printArvore(arvore,0);
         }
         else if (!strcmp(comando, "p")) {
             fscanf(fileq, "%lf %lf %s %s", &x, &y, cor, sfx);
@@ -143,6 +147,8 @@ void processaQry(FILE *fileq, FILE *filesaidaquery, Lista listaOriginal, FILE *a
             atualizaAngulosVertice(poligono, bomba);
             ordenarVerticesPorAngulo(poligono, ordenacao, N);
             printVertices(poligono);
+            arvore=insertVerticesarvore(arvore,poligono);
+            printArvore(arvore,0);
         }
         else if (!strcmp(comando, "cln")) {
             fscanf(fileq, "%lf %lf %lf %lf %s", &x, &y, &dx, &dy, sfx);
@@ -152,8 +158,17 @@ void processaQry(FILE *fileq, FILE *filesaidaquery, Lista listaOriginal, FILE *a
             atualizaAngulosVertice(poligono, bomba);
             ordenarVerticesPorAngulo(poligono, ordenacao, N);
             printVertices(poligono);
+            arvore=insertVerticesarvore(arvore,poligono);
+            printArvore(arvore,0);
         }
     } while (1);
+
+    // Insere o V dentro da lista original
+    Linha *V = getV(poligono);
+    int VCount = getVCount(poligono);
+    for (i = 0; i < VCount; i++) {
+        adicionar(&listaOriginal, V[i], 3);
+    }
 
     // teste apagar depois
     exibirlista(listaOriginal, filesaidaquery);
