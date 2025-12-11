@@ -51,7 +51,9 @@ void escreveCirculoTxt(Circulo c, FILE *arq);
 //escreve o círculo em um arquivo txt
 
 void destroiCirculo(Circulo c);
+//libera memória do círculo
 
 Linha transformaAnteparoCirculo(Circulo c, int novo_id, char modo);
+//transforma o círculo em uma linha que representa um anteparo
 
 #endif

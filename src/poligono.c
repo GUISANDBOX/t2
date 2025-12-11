@@ -1,5 +1,7 @@
 #include "ponto.h"
 #include "linha.h"
+#include "circulo.h"
+#include "retangulo.h"
 #include "poligono.h"
 #include <stdio.h>
 #include <stdlib.h>
@@ -213,3 +215,138 @@ Arvore insertVerticesarvore(Arvore ativos, Poligono poligono){
 }
 
 
+int pontoDentroPoligono(Ponto p, Poligono poligono) {
+    struct sPoligono *pol = (struct sPoligono*)poligono;
+    int n = pol->n;
+    int dentro = 0;
+
+    double px = getX(p);
+    double py = getY(p);
+
+    for (int i = 0, j = n - 1; i < n; j = i++) {
+        Ponto pi = pol->vertices[i];
+        Ponto pj = pol->vertices[j];
+
+        double xi = getX(pi), yi = getY(pi);
+        double xj = getX(pj), yj = getY(pj);
+
+        int condY = ((yi > py) != (yj > py));
+        if (condY) {
+            double x_inter = xj + (xi - xj) * ((py - yj) / (yi - yj));
+            if (x_inter > px)
+                dentro = !dentro;
+        }
+    }
+
+    return dentro;
+}
+
+int linhaInterceptaPoligono(Linha l, Poligono poligono) {
+    struct sPoligono *pol = (struct sPoligono*)poligono;
+    Ponto a = getP1Linha(l);
+    Ponto b = getP2Linha(l);
+
+    // 1) testa interseção com cada aresta do polígono
+    for (int i = 0; i < pol->n; i++) {
+        Ponto c = pol->vertices[i];
+        Ponto d = pol->vertices[(i + 1) % pol->n];
+
+        if (segmentosInterceptam(a, b, c, d))
+            return 1;
+    }
+
+    // 2) se não cruzou nenhuma aresta, verificar inclusão
+    if (pontoDentroPoligono(a, poligono)) return 1;
+    if (pontoDentroPoligono(b, poligono)) return 1;
+
+    return 0;
+}
+
+int retanguloInterceptaPoligono(Retangulo r, Poligono poligono) {
+    double x = getXRetangulo(r);
+    double y = getYRetangulo(r);
+    double w = getWRetangulo(r);
+    double h = getHRetangulo(r);
+
+    Ponto p1 = criaPonto(x,     y);
+    Ponto p2 = criaPonto(x + w, y);
+    Ponto p3 = criaPonto(x + w, y + h);
+    Ponto p4 = criaPonto(x,     y + h);
+
+    Linha e1 = criaLinha(p1, p2, "black", 0, 0);
+    Linha e2 = criaLinha(p2, p3, "black", 0, 0);
+    Linha e3 = criaLinha(p3, p4, "black", 0, 0);
+    Linha e4 = criaLinha(p4, p1, "black", 0, 0);
+
+    if (linhaInterceptaPoligono(e1, poligono)) return 1;
+    if (linhaInterceptaPoligono(e2, poligono)) return 1;
+    if (linhaInterceptaPoligono(e3, poligono)) return 1;
+    if (linhaInterceptaPoligono(e4, poligono)) return 1;
+
+    // polígono completamente dentro do retângulo?
+    struct sPoligono *pol = (struct sPoligono*)poligono;
+    for (int i = 0; i < pol->n; i++) {
+        Ponto v = pol->vertices[i];
+        double vx = getX(v), vy = getY(v);
+        if (vx >= x && vx <= x + w &&
+            vy >= y && vy <= y + h)
+            return 1;
+    }
+
+    // retângulo completamente dentro do polígono?
+    if (pontoDentroPoligono(p1, poligono)) return 1;
+
+    return 0;
+}
+
+
+double distPontoSegmento(Ponto p, Ponto a, Ponto b) {
+    double px = getX(p), py = getY(p);
+    double ax = getX(a), ay = getY(a);
+    double bx = getX(b), by = getY(b);
+
+    double vx = bx - ax;
+    double vy = by - ay;
+    double wx = px - ax;
+    double wy = py - ay;
+
+    double c1 = vx*wx + vy*wy;
+    if (c1 <= 0) return hypot(px - ax, py - ay);
+
+    double c2 = vx*vx + vy*vy;
+    if (c2 <= c1) return hypot(px - bx, py - by);
+
+    double t = c1 / c2;
+    double projx = ax + t*vx;
+    double projy = ay + t*vy;
+    return hypot(px - projx, py - projy);
+}
+
+int circuloInterceptaPoligono(Circulo c, Poligono poligono) {
+    struct sPoligono *pol = (struct sPoligono*)poligono;
+
+    Ponto centro = criaPonto(getXCirculo(c), getYCirculo(c));
+    double r = getRCirculo(c);
+
+    // 1) alguma aresta do polígono fica a distância <= r?
+    for (int i = 0; i < pol->n; i++) {
+        Ponto a = pol->vertices[i];
+        Ponto b = pol->vertices[(i + 1) % pol->n];
+
+        double d = distPontoSegmento(centro, a, b);
+        if (d <= r) return 1;
+    }
+
+    // 2) centro dentro do polígono
+    if (pontoDentroPoligono(centro, poligono)) return 1;
+
+    // 3) algum vértice do polígono dentro do círculo
+    for (int i = 0; i < pol->n; i++) {
+        Ponto v = pol->vertices[i];
+        double dx = getX(v) - getXCirculo(c);
+        double dy = getY(v) - getYCirculo(c);
+        if (dx*dx + dy*dy <= r*r) return 1;
+    }
+
+    return 0;
+}

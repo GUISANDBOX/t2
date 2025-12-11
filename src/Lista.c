@@ -1,11 +1,13 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include "Lista.h"
 #include "circulo.h"
 #include "ponto.h"
 #include "retangulo.h"
 #include "linha.h"
 #include "texto.h"
+#include "poligono.h"
 
 struct elemento{
     Item item;
@@ -290,4 +292,101 @@ Lista transformaAnteparo(Lista l, int i, int j, char s, Ponto vertices[], int *q
 void adicionaBomba(Lista *l, Ponto centro) {
     Texto bomba = criaTexto(centro, "red", "red", ".", 'm', "cursive", "bolder", "20", 0);
     adicionar(l, (Item)bomba, 4);
+}
+
+void ativarBomba(char *comando, Lista *listaOriginal, Poligono poligono,
+                 double x, double y, char *cor, double dx, double dy, char *sfx) {
+    Linha *V = getV(poligono);
+    sNoItem *atual = (sNoItem *)*listaOriginal;
+    sNoItem *anterior = NULL;
+
+    while (atual != NULL) {
+        int bate = 0;
+
+        if (atual->tipo == 1) {                // Círculo
+            Circulo c = (Circulo)atual->item;
+            bate = circuloInterceptaPoligono(c, poligono);
+        }
+        else if (atual->tipo == 2) {           // Retângulo
+            Retangulo r = (Retangulo)atual->item;
+            bate = retanguloInterceptaPoligono(r, poligono);
+        }
+        else if (atual->tipo == 3) {           // Linha
+            Linha l = (Linha)atual->item;
+            bate = linhaInterceptaPoligono(l, poligono);
+        }
+        else if (atual->tipo == 4) {           // Texto
+            // tratar texto, se quiser
+        }
+
+        sNoItem *prox = atual->prox;  // guarda antes de mexer na lista
+
+        if (bate && strcmp(comando, "d") == 0) {
+            printf("OBJETO ATINGIDO PELA BOMBA!\n");
+            printf("BOMBA DETONADA - REMOVENDO OBJETO DA LISTA\n");
+
+            // tira 'atual' da lista
+            if (anterior != NULL) {
+                anterior->prox = prox;
+            } else {
+                // era o primeiro nó: atualiza cabeça
+                *listaOriginal = (Lista)prox;
+            }
+
+            // libera o item, se tiver função específica
+            // liberaCirculo/Retangulo/Linha/Text etc, dependendo de atual->tipo
+
+            //free(atual);         // libera o nó
+            // NÃO avança 'anterior' aqui, porque ele continua apontando pro anterior válido
+        } else {
+            // não removeu -> pode avançar 'anterior'
+            anterior = atual;
+        }
+
+        if (bate && !strcmp(comando, "p")) {
+            // Alterando a cor do objeto
+            if (atual->tipo == 1) {                // Círculo
+                setCorbCirculo((Circulo)atual->item, cor);
+                setCorpCirculo((Circulo)atual->item, cor);
+            }
+            else if (atual->tipo == 2) {           // Retângulo
+                setCorbRetangulo((Retangulo)atual->item, cor);
+                setCorpRetangulo((Retangulo)atual->item, cor);
+            }
+            else if (atual->tipo == 3) {           // Linha
+                setCorLinha((Linha)atual->item, cor);
+            }
+            else if (atual->tipo == 4) {           // Texto
+                // tratar texto, se quiser
+                setCorbTexto((Texto)atual->item, cor);
+                setCorpTexto((Texto)atual->item, cor);
+            }
+        }
+
+        if (bate && !strcmp(comando, "cln")) {
+            // Clonando o objeto
+            if (atual->tipo == 1) {                // Círculo
+                Circulo c = clonecirculo((Circulo)atual->item, getMaiorIdLista(*listaOriginal) + 1);
+                Ponto centro = criaPonto(getXCirculo(c) + dx, getYCirculo(c) + dy);
+                
+                adicionar(listaOriginal, (Item)c, 1);
+            }
+            else if (atual->tipo == 2) {           // Retângulo
+                Retangulo r = cloneretangulo((Retangulo)atual->item, getMaiorIdLista(*listaOriginal) + 1);
+                
+                adicionar(listaOriginal, (Item)r, 2);
+            }
+            else if (atual->tipo == 3) {           // Linha
+                Linha l = cloneLinha((Linha)atual->item, getMaiorIdLista(*listaOriginal) + 1);
+
+                adicionar(listaOriginal, (Item)l, 3);
+            }
+            else if (atual->tipo == 4) {           // Texto
+                // tratar texto, se quiser
+                
+            }
+        }
+
+        atual = prox;  // sempre avança usando o prox salvo
+    }
 }

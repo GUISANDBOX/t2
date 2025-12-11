@@ -33,5 +33,7 @@ char *getCorpLinha(Item item, int tipo);
 int getIdLinhaOuTexto(Item li, int tipo_i);
 //retorna o id de um item de linha ou texto
 
+void criarVisibilidade(char *comando, Poligono poligono, FILE *filesaidaquery, Lista *listaOriginal, double x, double y, char *cor, double dx, double dy, char *sfx);
+//cria a visibilidade a partir de um polígono e ativa a bomba
 
 #endif

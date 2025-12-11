@@ -6,6 +6,7 @@
 //programa para textos.
 
 typedef void* Texto;
+//define o tipo Texto
 
 Texto criaTexto(Ponto ponto, char corb[], char corp[], char txto[], char a, char currentFFamily[], char currentFWeight[], char currentFSize[], int id) ;
 //cria o texto com suas informações

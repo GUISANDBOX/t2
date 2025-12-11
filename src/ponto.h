@@ -3,7 +3,10 @@
 //programa para pontos.
 
 typedef void* Ponto;
+//define o tipo Ponto
+
 typedef void *Segmento;
+//define o tipo Segmento
 
 Ponto criaPonto(float x, float y);
 //cria o ponto com suas informações
@@ -18,12 +21,16 @@ float getY(Ponto p);
 //retorna a coordenada y do ponto
 
 void defineVerticePonto(Ponto p, char tipo, char codigo, double angulo, Segmento pSeg);
+//define as informações do ponto vertice
 
 void defineAngulo(Ponto p, double ang);
+//define o angulo do ponto
 
 double getAngulo(Ponto p);
+//retorna o angulo do ponto
 
 Segmento getSegmento(Ponto p);
+//retorna o segmento associado ao ponto
 
 char gettipoPonto(Ponto p);
 //retorna o tipo do ponto

@@ -33,3 +33,11 @@ void criatexto(int i, double x, double y, char corb[], char corp[], char a, char
         fprintf(f,"<text id=\"%d\" x=\"%lf\" y=\"%lf\" stroke=\"%s\" fill=\"%s\" fill-opacity=\"0.5\" text-anchor=\"middle\" font-family=\"%s\" font-weight=\"%s\" font-size=\"%s\" >%s</text>\n",i,x,y,corb,corp,currentFFamily,currentFWeight,currentFSize,txto);
     }
 }
+
+void criapoligonoSvg(int i, double pontos[][2], int n, char corb[], char corp[], FILE *f){
+    fprintf(f,"<polygon id=\"%d\" points=\"",i);
+    for (int j=0; j<n; j++){
+        fprintf(f,"%lf,%lf ",pontos[j][0], pontos[j][1]);
+    }
+    fprintf(f,"\" fill-opacity=\"0.5\" stroke=\"%s\" fill=\"%s\" />\n",corb,corp);
+}

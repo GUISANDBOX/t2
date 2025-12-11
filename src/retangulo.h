@@ -6,6 +6,7 @@
 //programa para retângulos.
 
 typedef void *Retangulo;
+//define o tipo Retangulo
 
 Retangulo criaRetangulo(double x, double y, double w, double h, char corb[], char corp[], int id);
 //cria o retângulo com suas informações
@@ -62,6 +63,6 @@ Linha transformaAnteparoRetangulo1(Retangulo r, int novo_id, char codigo);
 Linha transformaAnteparoRetangulo2(Retangulo r, int novo_id, char codigo);
 Linha transformaAnteparoRetangulo3(Retangulo r, int novo_id, char codigo);
 Linha transformaAnteparoRetangulo4(Retangulo r, int novo_id, char codigo);
-
+//transforma o retângulo em 4 linhas que representam seus lados como anteparos
 
 #endif

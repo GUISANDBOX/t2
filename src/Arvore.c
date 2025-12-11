@@ -221,7 +221,7 @@ int interseccaoRaioSegmento(Ponto origem, Ponto dir,
     if (pOut) {
         double ix = ox + t * dx;
         double iy = oy + t * dy;
-        *pOut = criaPonto(ix, iy); // ou sua função correspondente
+        *pOut = criaPonto(ix, iy);
     }
     if (tOut) *tOut = t;
 

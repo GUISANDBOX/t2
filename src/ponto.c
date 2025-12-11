@@ -1,6 +1,7 @@
 #include<stdio.h>
 #include<stdlib.h>
 #include "ponto.h"
+#include "Criasvg.h"
 
 struct sPonto {
     float x;

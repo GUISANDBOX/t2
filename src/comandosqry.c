@@ -9,6 +9,7 @@
 #include "poligono.h"
 #include <math.h>
 #include "Arvore.h"
+#include "Criasvg.h"
 
 void escreveItemTxt(Item item, int tipo, FILE *arqtxt) {
     if (tipo == 1) { // Circulo
@@ -138,6 +139,7 @@ void processaQry(FILE *fileq, FILE *filesaidaquery, Lista listaOriginal, FILE *a
             printVertices(poligono);
             arvore=insertVerticesarvore(arvore,poligono);
             printArvore(arvore,0);
+            criarVisibilidade(comando, poligono, filesaidaquery, &listaOriginal, x, y, cor, dx, dy, sfx);
         }
         else if (!strcmp(comando, "p")) {
             fscanf(fileq, "%lf %lf %s %s", &x, &y, cor, sfx);
@@ -149,6 +151,7 @@ void processaQry(FILE *fileq, FILE *filesaidaquery, Lista listaOriginal, FILE *a
             printVertices(poligono);
             arvore=insertVerticesarvore(arvore,poligono);
             printArvore(arvore,0);
+            criarVisibilidade(comando, poligono, filesaidaquery, &listaOriginal, x, y, cor, dx, dy, sfx);
         }
         else if (!strcmp(comando, "cln")) {
             fscanf(fileq, "%lf %lf %lf %lf %s", &x, &y, &dx, &dy, sfx);
@@ -160,28 +163,29 @@ void processaQry(FILE *fileq, FILE *filesaidaquery, Lista listaOriginal, FILE *a
             printVertices(poligono);
             arvore=insertVerticesarvore(arvore,poligono);
             printArvore(arvore,0);
+            criarVisibilidade(comando, poligono, filesaidaquery, &listaOriginal, x, y, cor, dx, dy, sfx);
         }
     } while (1);
 
-    // Insere o V dentro da lista original
-    Linha *V = getV(poligono);
-    int VCount = getVCount(poligono);
-    for (i = 0; i < VCount; i++) {
-        adicionar(&listaOriginal, V[i], 3);
-    }
+    
 
-    // teste apagar depois
     exibirlista(listaOriginal, filesaidaquery);
-    // printf("QTD VERTICES ANTEPARO: %d\n", qtdVertices);
-    // atualizaAngulosVertice(poligono, NULL);
-    // printf("--- Antes de ordenar ---\n");
-    // printVertices(poligono);
-    // ordenarVerticesPorAngulo(poligono);
-    // printf("--- Depois de ordenar ---\n");
-    // printVertices(poligono);
 
     fprintf(filesaidaquery, "</svg>\n");
 }
 
 
-
+void  criarVisibilidade(char *comando, Poligono poligono, FILE *filesaidaquery, Lista *listaOriginal, double x, double y, char *cor, double dx, double dy, char *sfx) {
+    // Insere o V dentro da lista original
+    Linha *V = getV(poligono);
+    int VCount = getVCount(poligono);
+    double matrizPontos[10000][2];
+    int i;
+    for (i = 0; i < VCount; i++) {
+        Ponto p1 = getP1Linha(V[i]), p2 = getP2Linha(V[i]);
+        matrizPontos[i][0] = getX(p1);
+        matrizPontos[i][1] = getY(p1);
+    }
+    criapoligonoSvg(-1, matrizPontos, VCount, "black", "gray", filesaidaquery);
+    ativarBomba(comando, listaOriginal, poligono, x, y, cor, dx, dy, sfx);
+}

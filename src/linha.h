@@ -6,6 +6,7 @@
 //programa para linhas.
 
 typedef void* Linha;
+//define o tipo Linha
 
 Linha criaLinha(Ponto p1, Ponto p2, char cor[], int id, int anteparo);
 //cria a linha com suas informações
@@ -50,9 +51,12 @@ void destroiLinha(Linha l);
 //libera a memória da linha
 
 Linha transformaAnteparoLinha(Linha l, int novo_id);
+//transforma a linha em um anteparo
 
 Ponto getP1Linha(Linha l);
+//retorna o ponto 1 da linha
 
 Ponto getP2Linha(Linha l);
+//retorna o ponto 2 da linha
 
 #endif
