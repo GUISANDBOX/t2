@@ -162,3 +162,10 @@ Ponto getP2Linha(Linha l) {
     struct sLinha *lin = l;
     return lin->p2;
 }
+
+char getcodigoLinha(Linha l) {
+    struct sLinha *lin = l;
+    char codigoP1 = getcodigoPonto(lin->p1);
+    char codigoP2 = getcodigoPonto(lin->p2);
+    return codigoP1;
+}

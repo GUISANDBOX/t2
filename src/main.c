@@ -73,6 +73,7 @@ int main(int argc, char *argv[]) {
     char corb[100], corp[100], cor[100], txto[100], fFamily[100], fWeight[100], fSize[100];
     int n=10;
     char ordenacao='q';
+    double menorX=1000000, menorY=1000000, maiorX=-1000000, maiorY=-1000000;
     
     while (i < argc){
          if (strcmp(argv[i],"-e")==0){
@@ -126,7 +127,7 @@ int main(int argc, char *argv[]) {
         return 1;
     }
     
-    lista=processaGeo(arqgeo, lista, arqnovo);
+    lista=processaGeo(arqgeo, lista, arqnovo, &menorX, &menorY, &maiorX, &maiorY);
 
     fclose(arqgeo);
     fclose(arqnovo);
@@ -167,7 +168,7 @@ int main(int argc, char *argv[]) {
         printf("Criando TXT %s \n", dirsaidabaseaux);
         FILE *filesaidaquery = fopen(dirsaidabase, "w+");
         FILE *filesaidatxt = fopen(dirsaidabaseaux, "w+");
-        processaQry(fileq, filesaidaquery, lista, filesaidatxt, ordenacao, n);
+        processaQry(fileq, filesaidaquery, lista, filesaidatxt, ordenacao, n, menorX, menorY, maiorX, maiorY, dirsaidabase);
 
         limpaLista(&lista);
         

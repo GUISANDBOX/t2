@@ -66,3 +66,8 @@ char gettipoPonto(Ponto p) {
     struct sPonto *ponto = p;
     return ponto->tipo;
 }
+
+char getcodigoPonto(Ponto p) {
+    struct sPonto *ponto = p;
+    return ponto->codigo;
+}

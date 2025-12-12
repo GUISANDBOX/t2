@@ -147,3 +147,16 @@ void destroiTexto(Texto t) {
     if (t == NULL) return;
     free(t);
 }
+
+void transformaAnteparoTexto(Texto t, int novo_id) {
+    struct sTexto *tex = t;
+    tex->id = novo_id;
+    
+    // Obtém os pontos inicial e final do texto
+    Ponto p1 = getP1Texto(t);
+    Ponto p2 = getP2Texto(t);
+    
+    // Define os vértices como anteparo
+    defineVerticePonto(p1, 'i', 'o', 0, NULL);  // 'i' = início, 'o' = origem do anteparo
+    defineVerticePonto(p2, 'f', 'o', 0, NULL);  // 'f' = fim, 'o' = origem do anteparo
+}

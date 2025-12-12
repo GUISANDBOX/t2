@@ -56,4 +56,6 @@ int getIdTexto(Texto t);
 void destroiTexto(Texto t);
 //libera a memória do texto
 
+void transformaAnteparoTexto(Texto t, int novo_id);
+
 #endif

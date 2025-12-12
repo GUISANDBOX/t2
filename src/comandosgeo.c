@@ -10,7 +10,7 @@ static char currentFFamily[100] = "sans";
 static char currentFWeight[100] = "normal";
 static char currentFSize[100] = "12"; 
 
-Lista processaGeo(FILE *arqgeo, Lista lista, FILE *arqsvg) {
+Lista processaGeo(FILE *arqgeo, Lista lista, FILE *arqsvg, double *menorXp, double *menorYp, double *maiorXp, double *maiorYp) {
     char comando[32];
     int z, i;
     float x, y, x1, x2, y1, y2, r;
@@ -86,9 +86,11 @@ Lista processaGeo(FILE *arqgeo, Lista lista, FILE *arqsvg) {
 
     exibirlista(lista, arqsvg);
     fprintf(arqsvg, "</svg>\n");
-    
-    Retangulo r1 = criaRetangulo(menorX-10, menorY-10, maiorX-menorX+20, maiorY-menorY+20, "#000000FF", "#00000000", -1);
-    adicionar(&lista, r1, 2);
+
+    *menorXp = menorX;
+    *menorYp = menorY;
+    *maiorXp = maiorX;
+    *maiorYp = maiorY;
 
     return lista;
 }

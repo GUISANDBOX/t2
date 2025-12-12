@@ -9,7 +9,7 @@
 #include "texto.h"
 #include <math.h>
 
-void processaQry(FILE *fileq, FILE *filesaidaquery, Lista listaOriginal, FILE *arqtxt, char ordenacao, int n);
+void processaQry(FILE *fileq, FILE *filesaidaquery, Lista listaOriginal, FILE *arqtxt, char ordenacao, int n, double menorX, double menorY, double maiorX, double maiorY, char *dirsaidabase);
 //processa os comandos do arquivo .qry
 
 int linhaOuTexto(int tipo);
@@ -33,7 +33,7 @@ char *getCorpLinha(Item item, int tipo);
 int getIdLinhaOuTexto(Item li, int tipo_i);
 //retorna o id de um item de linha ou texto
 
-void criarVisibilidade(char *comando, Poligono poligono, FILE *filesaidaquery, Lista *listaOriginal, double x, double y, char *cor, double dx, double dy, char *sfx);
+void criarVisibilidade(char *comando, Poligono poligono, FILE *filesaidaquery, Lista *listaOriginal, double x, double y, char *cor, double dx, double dy, char *sfx, char *dirsaidabase, FILE *arqtxt);
 //cria a visibilidade a partir de um polígono e ativa a bomba
 
 #endif

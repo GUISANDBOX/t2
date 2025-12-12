@@ -103,7 +103,7 @@ int getIdLinhaOuTexto(Item li, int tipo_i) {
 /**
  * O arqtxt é o arquivo txt de saída para comandos qry que precisem escrever nele.
  */
-void processaQry(FILE *fileq, FILE *filesaidaquery, Lista listaOriginal, FILE *arqtxt, char ordenacao, int N) {
+void processaQry(FILE *fileq, FILE *filesaidaquery, Lista listaOriginal, FILE *arqtxt, char ordenacao, int N, double menorX, double menorY, double maiorX, double maiorY, char *dirsaidabase) {
     char comando[32];
     int comandoaux, i, j, n;
     double x, y, dx, dy;
@@ -124,46 +124,56 @@ void processaQry(FILE *fileq, FILE *filesaidaquery, Lista listaOriginal, FILE *a
 
         if (!strcmp(comando, "a")) {
             fscanf(fileq, "%d %d %c", &i, &j, &s);
-            fprintf(arqtxt, "[*] a %d %d %c\n", i, j, s);
-            listaOriginal = transformaAnteparo(listaOriginal, i, j, s, vertices, &qtdVertices);
-            listaOriginal = transformaAnteparo(listaOriginal, -1, -1, s, vertices, &qtdVertices);
-            poligono = criaPoligono(qtdVertices, vertices);
+            if (arqtxt) fprintf(arqtxt, "[*] a %d %d %c\n", i, j, s);
+            listaOriginal = transformaAnteparo(listaOriginal, i, j, s, vertices, &qtdVertices, arqtxt);
         }
         else if (!strcmp(comando, "d")) {
             fscanf(fileq, "%lf %lf %s", &x, &y, sfx);
-            fprintf(arqtxt, "[*] d %lf %lf %s\n", x, y, sfx);
+            if (arqtxt) fprintf(arqtxt, "[*] d %lf %lf %s\n", x, y, sfx);
             Ponto bomba = criaPonto(x, y);
-            adicionaBomba(&listaOriginal, bomba);
+            adicionaBomba(&listaOriginal, bomba, &menorX, &menorY, &maiorX, &maiorY);
+            Retangulo r1 = criaRetangulo(menorX-10, menorY-10, maiorX-menorX+20, maiorY-menorY+20, "#000000FF", "#00000000", -1);
+            adicionar(&listaOriginal, r1, 2);
+            listaOriginal = transformaAnteparo(listaOriginal, -1, -1, s, vertices, &qtdVertices, arqtxt);
+            poligono = criaPoligono(qtdVertices, vertices);
             atualizaAngulosVertice(poligono, bomba);
             ordenarVerticesPorAngulo(poligono, ordenacao, N);
             printVertices(poligono);
             arvore=insertVerticesarvore(arvore,poligono);
             printArvore(arvore,0);
-            criarVisibilidade(comando, poligono, filesaidaquery, &listaOriginal, x, y, cor, dx, dy, sfx);
+            criarVisibilidade(comando, poligono, filesaidaquery, &listaOriginal, x, y, cor, dx, dy, sfx, dirsaidabase, arqtxt);
         }
         else if (!strcmp(comando, "p")) {
             fscanf(fileq, "%lf %lf %s %s", &x, &y, cor, sfx);
-            fprintf(arqtxt, "[*] p %lf %lf %s %s\n", x, y, cor, sfx);
+            if (arqtxt) fprintf(arqtxt, "[*] p %lf %lf %s %s\n", x, y, cor, sfx);
             Ponto bomba = criaPonto(x, y);
-            adicionaBomba(&listaOriginal, bomba);
+            adicionaBomba(&listaOriginal, bomba, &menorX, &menorY, &maiorX, &maiorY);
+            Retangulo r1 = criaRetangulo(menorX-10, menorY-10, maiorX-menorX+20, maiorY-menorY+20, "#000000FF", "#00000000", -1);
+            adicionar(&listaOriginal, r1, 2);
+            listaOriginal = transformaAnteparo(listaOriginal, -1, -1, s, vertices, &qtdVertices, arqtxt);
+            poligono = criaPoligono(qtdVertices, vertices);
             atualizaAngulosVertice(poligono, bomba);
             ordenarVerticesPorAngulo(poligono, ordenacao, N);
             printVertices(poligono);
             arvore=insertVerticesarvore(arvore,poligono);
             printArvore(arvore,0);
-            criarVisibilidade(comando, poligono, filesaidaquery, &listaOriginal, x, y, cor, dx, dy, sfx);
+            criarVisibilidade(comando, poligono, filesaidaquery, &listaOriginal, x, y, cor, dx, dy, sfx, dirsaidabase, arqtxt);
         }
         else if (!strcmp(comando, "cln")) {
             fscanf(fileq, "%lf %lf %lf %lf %s", &x, &y, &dx, &dy, sfx);
-            fprintf(arqtxt, "[*] cln %lf %lf %lf %lf %s\n", x, y, dx, dy, sfx);
+            if (arqtxt) fprintf(arqtxt, "[*] cln %lf %lf %lf %lf %s\n", x, y, dx, dy, sfx);
             Ponto bomba = criaPonto(x, y);
-            adicionaBomba(&listaOriginal, bomba);
+            adicionaBomba(&listaOriginal, bomba, &menorX, &menorY, &maiorX, &maiorY);
+            Retangulo r1 = criaRetangulo(menorX-10, menorY-10, maiorX-menorX+20, maiorY-menorY+20, "#000000FF", "#00000000", -1);
+            adicionar(&listaOriginal, r1, 2);
+            listaOriginal = transformaAnteparo(listaOriginal, -1, -1, s, vertices, &qtdVertices, arqtxt);
+            poligono = criaPoligono(qtdVertices, vertices);
             atualizaAngulosVertice(poligono, bomba);
             ordenarVerticesPorAngulo(poligono, ordenacao, N);
             printVertices(poligono);
             arvore=insertVerticesarvore(arvore,poligono);
             printArvore(arvore,0);
-            criarVisibilidade(comando, poligono, filesaidaquery, &listaOriginal, x, y, cor, dx, dy, sfx);
+            criarVisibilidade(comando, poligono, filesaidaquery, &listaOriginal, x, y, cor, dx, dy, sfx, dirsaidabase, arqtxt);
         }
     } while (1);
 
@@ -175,7 +185,7 @@ void processaQry(FILE *fileq, FILE *filesaidaquery, Lista listaOriginal, FILE *a
 }
 
 
-void  criarVisibilidade(char *comando, Poligono poligono, FILE *filesaidaquery, Lista *listaOriginal, double x, double y, char *cor, double dx, double dy, char *sfx) {
+void  criarVisibilidade(char *comando, Poligono poligono, FILE *filesaidaquery, Lista *listaOriginal, double x, double y, char *cor, double dx, double dy, char *sfx, char *dirsaidabase, FILE *arqtxt) {
     // Insere o V dentro da lista original
     Linha *V = getV(poligono);
     int VCount = getVCount(poligono);
@@ -186,6 +196,19 @@ void  criarVisibilidade(char *comando, Poligono poligono, FILE *filesaidaquery, 
         matrizPontos[i][0] = getX(p1);
         matrizPontos[i][1] = getY(p1);
     }
-    criapoligonoSvg(-1, matrizPontos, VCount, "black", "gray", filesaidaquery);
-    ativarBomba(comando, listaOriginal, poligono, x, y, cor, dx, dy, sfx);
+    if(strcmp(sfx,"-")!=0){
+        dirsaidabase[strlen(dirsaidabase)-4]='\0';
+        strcat(dirsaidabase,"-");
+        strcat(dirsaidabase,sfx);
+        strcat(dirsaidabase,".svg");
+        FILE *arqsfx = fopen(dirsaidabase, "w");
+        fprintf(arqsfx, "<svg xmlns:svg=\"http://www.w3.org/2000/svg\" xmlns=\"http://www.w3.org/2000/svg\" version=\"1.1\">\n");
+        criapoligonoSvg(-1, matrizPontos, VCount, "black", "gray", arqsfx);
+        fprintf(arqsfx, "</svg>\n");
+        fclose(arqsfx);
+    }
+    else {
+        criapoligonoSvg(-1, matrizPontos, VCount, "black", "gray", filesaidaquery);
+    }
+    ativarBomba(comando, listaOriginal, poligono, x, y, cor, dx, dy, sfx, arqtxt);
 }

@@ -2,6 +2,7 @@
 #define LISTA
 #include "ponto.h"
 #include "poligono.h"
+#include <stdio.h>
 
 //programa para listas.
 
@@ -32,14 +33,14 @@ void limpaLista(Lista *l);
 void destruirItemLista(Item item, int tipo);
 //destrói um item da lista de acordo com seu tipo
 
-Lista transformaAnteparo(Lista l, int i, int j, char s, Ponto *vertices, int *qtdVertices);
+Lista transformaAnteparo(Lista l, int i, int j, char s, Ponto *vertices, int *qtdVertices, FILE *arqtxt);
 //transforma os anteparos circulos e retangulos em linhas
 
-void adicionaBomba(Lista *l, Ponto centro);
+void adicionaBomba(Lista *l, Ponto centro, double *menorX, double *menorY, double *maiorX, double *maiorY);
 //adiciona uma bomba (texto) na lista
 
 void ativarBomba(char *comando, Lista *listaOriginal, Poligono poligono,
-                 double x, double y, char *cor, double dx, double dy, char *sfx);
+                 double x, double y, char *cor, double dx, double dy, char *sfx, FILE *arqtxt);
 //ativa a bomba, verificando colisões e aplicando os efeitos
 
 #endif

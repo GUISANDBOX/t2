@@ -59,4 +59,7 @@ Ponto getP1Linha(Linha l);
 Ponto getP2Linha(Linha l);
 //retorna o ponto 2 da linha
 
+char getcodigoLinha(Linha l);
+//retorna o código da linha
+
 #endif
